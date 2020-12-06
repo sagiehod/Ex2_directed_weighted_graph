@@ -2,16 +2,17 @@ package api;
 
 public class ELocation implements edge_location {
 
+	private edge_data e;
+	public ELocation(edge_data _e) {
+		e=new EdgeData(((EdgeData)_e));
+	}
 	@Override
 	public edge_data getEdge() {
-		// TODO Auto-generated method stub
-		return null;
+		return e;
 	}
 
 	@Override
 	public double getRatio() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
