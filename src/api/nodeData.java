@@ -1,67 +1,86 @@
 package api;
+import gameClient.util.Point3D;
 
-import java.util.Objects;
+	public class NodeData implements node_data  {
+		private int key;
+		private static int idCounter = 0;
+		private geo_location GLocation;	
+		private double weight;
+		private String info;
+		private int tag;	
+		/**
+		 * constructor of NodeInfo
+		 * @param i 
+		 */
+		
+		public NodeData()  {
+			key=idCounter++;
+			this.GLocation = new Point3D(0,0,0);
+			info="";
+			tag=0;
+			weight=Double.POSITIVE_INFINITY;
+		}
+		public NodeData(int i)  {
+			key=i;
+			this.GLocation = new Point3D(0,0,0);
+			info="";
+			tag=0;
+			weight=Double.POSITIVE_INFINITY;
+		}
+		/**
+		 * A copy constructor of this NodeData
+		 * @param other
+		 */
+		public NodeData(node_data other) {
+			this.key=other.getKey();
+			this.info=other.getInfo();
+			this.tag = other.getTag();
+			this.weight = other.getWeight();
+			this.GLocation=new Point3D(other.getLocation().x(),other.getLocation().y(),other.getLocation().z());
+		}
+		
 
-public class nodeData implements node_data  {
-	private int key;
-	private geo_location GLocation;	
-	private double weight;
-	private String info;
-	private int tag;	
-	public nodeData(int key, geo_location GLocation, double weight, String info, int tag) {		
-		this.key = key;
-		this.GLocation = GLocation;
-		this.weight = weight;
-		this.info = info;
-		this.tag = tag;
-	}
-	public nodeData() {
-		this.key = 0;       
-		this.info= "";
-		this.weight = 0;
-	}
-	@Override
-	public int getKey() {
-		// TODO Auto-generated method stub
-		return key;
-	}
-	@Override
-	public geo_location getLocation() {
-		// TODO Auto-generated method stub
-		return GLocation;
+		@Override
+		public int getKey() {
+			return this.key;
+		}
+		@Override
+		public geo_location getLocation() {
+			return GLocation;
 
-	}
-	@Override
-	public void setLocation(geo_location p) {
-		// TODO Auto-generated method stub
-		this.GLocation=p;
-	}
-	@Override
-	public double getWeight() {
-		// TODO Auto-generated method stub
-		return weight;
-	}
-	@Override
-	public void setWeight(double w) {
-		this.weight=w;		
-	}
-	@Override
-	public String getInfo() {
-		// TODO Auto-generated method stub
-		return info;
-	}
-	@Override
-	public void setInfo(String s) {
-		this.info=s;
-	}
-	@Override
-	public int getTag() {
-		// TODO Auto-generated method stub
-		return tag;
-	}
-	@Override
-	public void setTag(int t) {
-		this.tag=t;
-	}
-
+		}
+		@Override
+		public void setLocation(geo_location p) {
+			this.GLocation=new Point3D(p.x(),p.y(),p.z());
+		}
+		@Override
+		public double getWeight() {
+			return weight;
+		}
+		@Override
+		public void setWeight(double w) {
+			this.weight=w;		
+		}
+		@Override
+		public String getInfo() {		
+			return info;
+		}
+		@Override
+		public void setInfo(String s) {
+			this.info=s;
+		}
+		@Override
+		public int getTag() {
+			return tag;
+		}
+		@Override
+		public void setTag(int t) {
+			this.tag=t;
+		}
+		public static void main(String[] args) {
+			node_data a=new NodeData(6);
+			a.setInfo("asdasdasda");
+			
+			System.out.println("stam");
+		}
 }
