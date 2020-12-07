@@ -10,11 +10,19 @@ import gameClient.util.Point3D;
 		private int tag;	
 		/**
 		 * constructor of NodeInfo
+		 * bdikaaaaaaaaaaaaaaaa
 		 * @param i 
 		 */
 		
-		public NodeData(int i)  {
+		public NodeData()  {
 			key=idCounter++;
+			this.GLocation = new Point3D(0,0,0);
+			info="";
+			tag=0;
+			weight=Double.POSITIVE_INFINITY;
+		}
+		public NodeData(int i)  {
+			key=i;
 			this.GLocation = new Point3D(0,0,0);
 			info="";
 			tag=0;
