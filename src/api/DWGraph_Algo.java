@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
@@ -50,13 +51,56 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		directed_weighted_graph copyGraph= new DWGraph_DS (this.WGraph);
 		return copyGraph;
 	}
-
-
+	
+	//for isconnected
+	Stack<node_data> stack=new Stack<node_data>();
+	int sccCount=0;
+	int id=0;
+	
 	@Override
 	public boolean isConnected() {
-		return true;
+		
+		init_nodes();
+		for(node_data i: this.WGraph.getV()) {
+			if(i.getTag()==0) {
+				dfs(i);
+			}
+		}
+		System.out.println(sccCount);
+		if(sccCount==1) return true;
+		return false;
 	}
+	
+	private void dfs(node_data at) {
+		
+		//ids - > tag 
+		//low -> weight 
+		//on stack -> info "true" - on stack "" no on stack
 
+		stack.push(at);
+		at.setInfo("true");
+		id++;
+		at.setTag(id);
+		at.setWeight(id);
+		if(this.getGraph().getE(at.getKey())!=null) {
+			for(edge_data edge:this.getGraph().getE(at.getKey())) {
+				node_data to =this.getGraph().getNode(edge.getDest());
+				if(to.getTag()==0) dfs(to);
+				if(to.getInfo().equals("true")) at.setWeight(Math.min(at.getWeight(), to.getWeight()));
+			}
+		}
+
+		if(at.getTag() == at.getWeight()) {
+			while(!stack.isEmpty()) {
+				node_data node=stack.pop();
+				node.setInfo("");
+				node.setWeight(at.getTag());
+				if(node==at) break;
+			}
+			sccCount++;
+		}
+
+	}
 	@Override
 	public double shortestPathDist(int src, int dest) {
 
@@ -67,7 +111,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 			return 0.0;
 		}
 		this.dijkstra(src, dest);
-		double d = WGraph.getNode(dest).getTag();
+		double d = WGraph.getNode(dest).getWeight();
 
 		if(d==Double.POSITIVE_INFINITY) {
 			return -1;
@@ -117,7 +161,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		for (node_data i :this.WGraph.getV()) {
 			i.setTag(0);
 			i.setWeight(Double.POSITIVE_INFINITY);
-			//i.setInfo("");
+			i.setInfo("");
 		}
 	}
 
@@ -144,7 +188,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 			for (edge_data e :  WGraph.getE(u.getKey())){
 				node_data v= this.WGraph.getNode(e.getDest());
 				if( v.getTag()==0) {
-					double dist = u.getTag()+e.getWeight();
+					double dist = u.getWeight()+e.getWeight();
 					if (dist < v.getWeight()) {       
 						v.setWeight(dist);
 						parentNodes.put(v, u);
@@ -204,25 +248,25 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	@Override
 	public boolean load(String file) {
 		try {
-		
-		  FileInputStream input = new FileInputStream(file);
-	
-		 JsonReader read = new JsonReader(new InputStreamReader(input));
-		 JsonObject elements = JsonParser.parseReader(read).getAsJsonObject(); 
-		 
-		 directed_weighted_graph _g = new DWGraph_DS();
-		 
-		 for(JsonElement i: elements.getAsJsonArray("Nodes")) {
-			 int id = i.getAsJsonObject().get("id").getAsInt();
-			 node_data node=new NodeData(id);
-			 String[] pos= i.getAsJsonObject().get("pos").getAsString().split(",");
-			 node.setLocation(new Point3D(Double.parseDouble(pos[0]),Double.parseDouble(pos[0]),Double.parseDouble(pos[0])));	 
-			 _g.addNode(node);
-		 }
-		 for(JsonElement i: elements.getAsJsonArray("Edges")) {
-			 _g.connect(i.getAsJsonObject().get("src").getAsInt(), i.getAsJsonObject().get("dest").getAsInt(), i.getAsJsonObject().get("w").getAsDouble());		 
-		 }
-		 init(_g);
+
+			FileInputStream input = new FileInputStream(file);
+
+			JsonReader read = new JsonReader(new InputStreamReader(input));
+			JsonObject elements = JsonParser.parseReader(read).getAsJsonObject(); 
+
+			directed_weighted_graph _g = new DWGraph_DS();
+
+			for(JsonElement i: elements.getAsJsonArray("Nodes")) {
+				int id = i.getAsJsonObject().get("id").getAsInt();
+				node_data node=new NodeData(id);
+				String[] pos= i.getAsJsonObject().get("pos").getAsString().split(",");
+				node.setLocation(new Point3D(Double.parseDouble(pos[0]),Double.parseDouble(pos[0]),Double.parseDouble(pos[0])));	 
+				_g.addNode(node);
+			}
+			for(JsonElement i: elements.getAsJsonArray("Edges")) {
+				_g.connect(i.getAsJsonObject().get("src").getAsInt(), i.getAsJsonObject().get("dest").getAsInt(), i.getAsJsonObject().get("w").getAsDouble());		 
+			}
+			init(_g);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -231,54 +275,59 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		return true;
 	}
 
-//	/**
-//	 * This method load a graph to this graph algorithm.
-//	 * @param file - file name
-//	 * @return true - iff the graph was successfully loaded.
-//	 */
-//	@Override
-//	public boolean load(String file) {
-//	
-//		try {
-//			GsonBuilder bild = new GsonBuilder();
-//			bild.registerTypeAdapter(directed_weighted_graph.class,new jasonDeserialize());
-//			Gson gson = bild.create();			
-//			FileReader reader = new FileReader(file);
-//			directed_weighted_graph newg= gson.fromJson(reader, directed_weighted_graph.class) ; 
-//			init(newg);
-//			reader.close();
-//			return true;
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}			
-//	
-	
-	
+
+
 	public static void main(String[] args) {
-//		directed_weighted_graph g = new DWGraph_DS();
-//
+		directed_weighted_graph g = new DWGraph_DS();
+
+		g.addNode(new NodeData(0));
+		g.addNode(new NodeData(1));
+		g.addNode(new NodeData(2));
+		//the node that already exist
+		g.addNode(new NodeData(4));
+		g.addNode(new NodeData(5));
+		g.addNode(new NodeData(6));
+		g.addNode(new NodeData(3));
+		g.addNode(new NodeData(7));
+	
+		g.connect(6,0,5);
+		g.connect(5,0,4);
+		g.connect(2,0,9);
+		g.connect(0,1,3);
+		g.connect(1,2,5);
+		g.connect(6,2,3);
+		g.connect(6,4,3);
+		g.connect(5,6,7);
+		g.connect(4,5,3);
+		g.connect(3,4,7);
+		g.connect(3,7,3);
+		g.connect(7,3,7);
+		g.connect(7,5,3);
+		
+//		
 //		g.addNode(new NodeData(0));
 //		g.addNode(new NodeData(1));
-//		g.addNode(new NodeData(2));
-//		g.addNode(new NodeData(3));
-//		g.addNode(new NodeData(3)); //the node that already exist
-//		g.addNode(new NodeData(4));
+//		
+//		g.connect(0,1,3);
 //
-//		g.connect(0,1,5);
-//		g.connect(0,2,4);
-//		g.connect(1,3,9);
-//		g.connect(2,1,3);
+//		g.connect(1,0,3);
+
 
 		dw_graph_algorithms algo=new DWGraph_Algo();
-	//	algo.init(g);
-	//	algo.save("test1");
-		algo.load("test1");
-		directed_weighted_graph g1=algo.getGraph();
+		algo.init(g);
+		algo.isConnected();
+		List<node_data> a=algo.shortestPath(0, 2);
+		for(node_data i:a) {
+			System.out.print(i.getKey()+" ");
+		}
 		
-		System.out.println(g1.nodeSize());
-		System.out.println(g1.edgeSize());
-		
+		//
+		//	algo.save("test1");
+		//		algo.load("test1");
+		//		directed_weighted_graph g1=algo.getGraph();
+		//		
+		//		System.out.println(g1.nodeSize());
+		//		System.out.println(g1.edgeSize());
+
 	}
 }
