@@ -10,7 +10,6 @@ import gameClient.util.Point3D;
 		private int tag;	
 		/**
 		 * constructor of NodeInfo
-		 * bdikaaaaaaaaaaaaaaaa
 		 * @param i 
 		 */
 		

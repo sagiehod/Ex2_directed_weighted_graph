@@ -1,5 +1,7 @@
 package api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -64,7 +66,7 @@ public class DWGraph_DS  implements directed_weighted_graph {
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		if (getNode(src)==null ||getNode(dest)==null) return;
+		if (getNode(src)==null ||getNode(dest)==null) return; 
 		if(w<0) {
 			throw new IllegalArgumentException("Error: weight should be bigger or equal than 0");
 		}
@@ -105,24 +107,26 @@ public class DWGraph_DS  implements directed_weighted_graph {
 	@Override
 	public node_data removeNode(int key) {
 		if(this.nodes_TheGragh_WD.containsKey(key)) {
-			if(this.edges_TheGragh_WD.get(key)!=null) {
-				Iterator<edge_data> iter = getE(key).iterator();
-				while(iter.hasNext()) {
-					edge_data e =  iter.next();
-					if(this.edges_TheGragh_WD.get(e.getDest())!=null) {
-						this.edges_TheGragh_WD.get(e.getDest()).remove(key);
-						edgeSize--;
-						MC++;
-					}
+			Iterator<node_data> iterv = getV().iterator();
+			while(iterv.hasNext()) {
+				node_data n =  iterv.next();
+				if(this.edges_TheGragh_WD.get(n.getKey())!=null && 
+						this.edges_TheGragh_WD.get(n.getKey()).containsKey(key)) {
+					this.edges_TheGragh_WD.get(n.getKey()).remove(key);
+					edgeSize--;
+					MC++;
 				}
 			}
-		if(this.edges_TheGragh_WD.get(key)!=null) {
-		edgeSize-=this.edges_TheGragh_WD.get(key).size();
-		MC+=this.edges_TheGragh_WD.get(key).size();
-		this.edges_TheGragh_WD.remove(key);
-		}
-		MC++;
-		return nodes_TheGragh_WD.remove(key);
+
+			if(this.edges_TheGragh_WD.get(key)!=null) {
+				edgeSize-=getE(key).size();
+				MC+=getE(key).size();
+			this.edges_TheGragh_WD.remove(key);
+			}
+			
+			
+			MC++;
+			return nodes_TheGragh_WD.remove(key);
 		}
 		return null;
 	}
@@ -150,5 +154,44 @@ public class DWGraph_DS  implements directed_weighted_graph {
 	@Override
 	public int getMC() {
 		return MC;
+	}
+	public static void main(String[] args) {
+		directed_weighted_graph g = new DWGraph_DS();
+
+		g.addNode(new NodeData(0));
+		g.addNode(new NodeData(1));
+		g.addNode(new NodeData(2));
+		//the node that already exist
+		g.addNode(new NodeData(4));
+		g.addNode(new NodeData(5));
+		g.addNode(new NodeData(6));
+
+
+		g.connect(0,1,2);
+		g.connect(0,5,3);
+		g.connect(1,2,1);
+		g.connect(2,0,5);
+		g.connect(2,6,2);
+		g.connect(4,5,8);
+		g.connect(5,6,1);
+		g.connect(6,0,1);
+		g.connect(6,4,3);
+
+		//ga.init(g);
+		//check the number of the list of the shortest path
+		//assertEquals(3, ga.shortestPath(1,6).size());
+		//assertEquals(4, ga.shortestPath(2,5).size());
+	
+		// 11 is node that not exist in the graph
+		//assertEquals(null, ga.shortestPath(1,11));
+		//path from the same node--> 1
+		//assertEquals(1, ga.shortestPath(2,2).size());
+		//two nodes that not exist in the graph
+		//assertEquals(null, ga.shortestPath(12,12));
+
+		//there is not path between them- 6 is not exist in the graph
+	//	g.removeNode(6);
+		//assertEquals(null, ga.shortestPath(2,6));
+
 	}
 }

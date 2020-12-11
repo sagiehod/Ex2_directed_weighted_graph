@@ -32,6 +32,11 @@ class DWGraph_DS_test {
 			assertEquals(4, g.edgeSize());
 			assertEquals(9, g.getMC());
 			
+			//nodes that not exist in the graph-do nothing
+			g.connect(20, 21, 1);
+			assertEquals(4, g.edgeSize());
+			assertEquals(9, g.getMC());
+			
 			
 			g.connect(2,1,3); // the same edge with same weight -does nothing
 			assertEquals(9, g.getMC());
@@ -116,24 +121,24 @@ class DWGraph_DS_test {
 			assertNull(ga.getEdge(2,0));
 			
 			ga.removeNode(4); // this node isnt exist in the graph
-			
-			
+				
 			assertEquals(10, ga.getMC());
 			
 			ga.removeNode(1);
 			assertEquals(0,ga.edgeSize());
 			assertEquals(1,ga.nodeSize());
 			
-			ga.removeNode(2);
-			
-			System.out.println(ga.edgeSize());
-			
 			assertEquals(0,ga.edgeSize());
 		
-			ga.addNode(new NodeData(1));
+			ga.removeNode(2);	
 			
+			
+			ga.addNode(new NodeData(1));
 			assertEquals(1,ga.nodeSize());
 			
+			ga.removeNode(1);
+			assertEquals(0,ga.edgeSize());
+			assertEquals(0,ga.nodeSize());
 			
 		}
 		
@@ -157,7 +162,8 @@ class DWGraph_DS_test {
 			ga.removeNode(3);
 			assertEquals(4, ga.edgeSize());
 			assertEquals(13, ga.getMC());
-			
+			assertNull(ga.getEdge(3,2));
+				
 			ga.removeEdge(0, 1);
 			ga.removeEdge(0, 1);//remove edge that not exist
 			
@@ -169,6 +175,17 @@ class DWGraph_DS_test {
 			assertEquals(14, ga.getMC());
 			
 			
+			ga.removeEdge(1,2);
+			ga.removeEdge(2,1);
+			ga.removeEdge(2,0);
+			assertEquals(0, ga.edgeSize());
+			
+			ga.removeNode(0);
+			ga.removeNode(1);
+			ga.removeNode(2);
+		
+			assertEquals(0, ga.edgeSize());
+			assertEquals(0, ga.nodeSize());
 			
 		}
 		

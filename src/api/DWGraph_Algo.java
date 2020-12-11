@@ -1,7 +1,5 @@
 package api;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,36 +10,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Stack;
-
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import gameClient.util.Point3D;
-
 import com.google.gson.JsonParser;
+
+
 
 public class DWGraph_Algo implements dw_graph_algorithms{
 
 	private directed_weighted_graph WGraph;
-
 	/**
 	 * constructor
 	 */
 	public DWGraph_Algo() {
 		WGraph=new DWGraph_DS();
 	}
-
 	@Override
 	public void init(directed_weighted_graph g) {
 		this.WGraph=  g;
 	}
-
 	@Override
 	public directed_weighted_graph getGraph() {
 		return this.WGraph;
@@ -51,16 +44,21 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		directed_weighted_graph copyGraph= new DWGraph_DS (this.WGraph);
 		return copyGraph;
 	}
-	
+
 	//for isconnected
 	Stack<node_data> stack=new Stack<node_data>();
 	int sccCount=0;
 	int id=0;
-	
+
 	@Override
 	public boolean isConnected() {
-		
+		if( WGraph==null||WGraph.nodeSize()==0||WGraph.nodeSize()==1) {
+			return true;
+		}
 		init_nodes();
+		stack=new Stack<node_data>();
+		 sccCount=0;
+		 id=0;
 		for(node_data i: this.WGraph.getV()) {
 			if(i.getTag()==0) {
 				dfs(i);
@@ -70,9 +68,9 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		if(sccCount==1) return true;
 		return false;
 	}
-	
+
 	private void dfs(node_data at) {
-		
+
 		//ids - > tag 
 		//low -> weight 
 		//on stack -> info "true" - on stack "" no on stack
@@ -112,10 +110,12 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 		this.dijkstra(src, dest);
 		double d = WGraph.getNode(dest).getWeight();
-
 		if(d==Double.POSITIVE_INFINITY) {
+
 			return -1;
-		}else {
+		}
+		else 
+		{
 			return d;
 		}
 	}
@@ -146,7 +146,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 		//Checks if the node we wanted to reach is initialized as infinity 
 		//so there is no way to reach it -then return null
-		double d = WGraph.getNode(dest).getTag();
+		double d = WGraph.getNode(dest).getWeight();
 		if(d==Double.POSITIVE_INFINITY) {
 			return null;
 		}
@@ -187,7 +187,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 
 			for (edge_data e :  WGraph.getE(u.getKey())){
 				node_data v= this.WGraph.getNode(e.getDest());
-				if( v.getTag()==0) {
+				//if( v.getTag()==0) {
 					double dist = u.getWeight()+e.getWeight();
 					if (dist < v.getWeight()) {       
 						v.setWeight(dist);
@@ -196,11 +196,11 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 						queue.add(v);
 					}
 				}
-			}
-			u.setTag(1);
+			//}
+			//u.setTag(1);
 		}
 		return parentNodes;
-	}
+}
 
 	@Override
 	public boolean save(String file) {
@@ -289,7 +289,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		g.addNode(new NodeData(6));
 		g.addNode(new NodeData(3));
 		g.addNode(new NodeData(7));
-	
+
 		g.connect(6,0,5);
 		g.connect(5,0,4);
 		g.connect(2,0,9);
@@ -303,14 +303,14 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		g.connect(3,7,3);
 		g.connect(7,3,7);
 		g.connect(7,5,3);
-		
-//		
-//		g.addNode(new NodeData(0));
-//		g.addNode(new NodeData(1));
-//		
-//		g.connect(0,1,3);
-//
-//		g.connect(1,0,3);
+
+		//		
+		//		g.addNode(new NodeData(0));
+		//		g.addNode(new NodeData(1));
+		//		
+		//		g.connect(0,1,3);
+		//
+		//		g.connect(1,0,3);
 
 
 		dw_graph_algorithms algo=new DWGraph_Algo();
@@ -320,7 +320,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		for(node_data i:a) {
 			System.out.print(i.getKey()+" ");
 		}
-		
+
 		//
 		//	algo.save("test1");
 		//		algo.load("test1");
