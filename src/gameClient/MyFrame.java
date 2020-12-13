@@ -24,9 +24,16 @@ public class MyFrame extends JFrame{
 	private int _ind;
 	private Arena _ar;
 	private gameClient.util.Range2Range _w2f;
+	
+	
 	MyFrame(String a) {
 		super(a);
-		int _ind = 0;
+//		a.componentListener(new componentAdapter() {
+//			@Override
+//			public void componentResized(componentEvaent e) {
+//				updateFrame();
+//			}
+//		});
 	}
 	public void update(Arena ar) {
 		this._ar = ar;

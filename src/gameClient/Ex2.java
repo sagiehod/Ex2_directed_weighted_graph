@@ -12,18 +12,33 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class Ex2_Client implements Runnable{
-	private static MyFrame _win;
+public class Ex2 implements Runnable{
+	private static Game_Frame _win;
 	private static Arena _ar;
+	private int id;
+	private int senrio;
+	
+	public Ex2(int id2, int senrio2) {
+		this.id=id2;
+		this.senrio=senrio2;
+	}
+
 	public static void main(String[] a) {
-		Thread client = new Thread(new Ex2_Client());
+		login_gui  l = new login_gui();
+		l.chose();
+		while(l.flag != true) {
+			System.out.println("");
+		}
+		Ex2 start=new Ex2(l.id,l.senrio);
+
+		Thread client = new Thread(start);
 		client.start();
 	}
 	
 	@Override
 	public void run() {
-		int scenario_num = 4;
-		game_service game = Game_Server_Ex2.getServer(scenario_num); // you have [0,23] games
+	//	int scenario_num = 3;
+		game_service game = Game_Server_Ex2.getServer(senrio); // you have [0,23] games
 	//	int id = 999;
 	//	game.login(id);
 		String g = game.getGraph();
@@ -35,21 +50,22 @@ public class Ex2_Client implements Runnable{
 		_win.setTitle("Ex2 - OOP: (NONE trivial Solution) "+game.toString());
 		int ind=0;
 		long dt=100;
+	
+		music player = new music("Pokémon music.mp3");
+		Thread playerThread = new Thread(player);
+		playerThread.start();
 		
 		while(game.isRunning()) {
 			moveAgants(game, gg);
-			try {
-				if(ind%1==0) {_win.repaint();}
-				Thread.sleep(dt);
-				ind++;
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		String res = game.toString();
+			_win.repaint();
+			_win.print_time(game.timeToEnd(),senrio);
 
-		System.out.println(res);
+			//System.out.println(game.timeToEnd());
+
+		}
+
+
+		
 		System.exit(0);
 	}
 	/** 
@@ -59,6 +75,7 @@ public class Ex2_Client implements Runnable{
 	 * @param gg
 	 * @param
 	 */
+	
 	private static void moveAgants(game_service game, directed_weighted_graph gg) {
 		String lg = game.move();
 		List<CL_Agent> log = Arena.getAgents(lg, gg);
@@ -99,7 +116,6 @@ public class Ex2_Client implements Runnable{
 	}
 	
 	
-	
 	private void init(game_service game) {
 		String g = game.getGraph();
 		String fs = game.getPokemons();
@@ -108,24 +124,22 @@ public class Ex2_Client implements Runnable{
 		_ar = new Arena();
 		_ar.setGraph(gg);
 		_ar.setPokemons(Arena.json2Pokemons(fs));
-		_win = new MyFrame("test Ex2");
+		_win = new Game_Frame("test Ex2");
 		_win.setSize(1000, 700);
 		_win.update(_ar);
 	
 		
 		//****	
 		_win.setVisible(true);
-		
-	_win.show();
 		String info = game.toString();
 		JSONObject line;
 		try {
 			line = new JSONObject(info);
 			JSONObject ttt = line.getJSONObject("GameServer");
 			int rs = ttt.getInt("agents");
-			System.out.println(info);
-			System.out.println(game.getPokemons());
-			int src_node = 0;  // arbitrary node, you should start at one of the pokemon
+//			System.out.println(info);
+//			System.out.println(game.getPokemons());
+//			int src_node = 0;  // arbitrary node, you should start at one of the pokemon
 			ArrayList<CL_Pokemon> cl_fs = Arena.json2Pokemons(game.getPokemons());
 			for(int a = 0;a<cl_fs.size();a++) { Arena.updateEdge(cl_fs.get(a),gg);}
 			for(int a = 0;a<rs;a++) {
@@ -140,3 +154,4 @@ public class Ex2_Client implements Runnable{
 		catch (JSONException e) {e.printStackTrace();}
 	}
 }
+

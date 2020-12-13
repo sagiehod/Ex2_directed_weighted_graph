@@ -39,7 +39,6 @@ import gameClient.util.Point3D;
 			this.GLocation=new Point3D(other.getLocation().x(),other.getLocation().y(),other.getLocation().z());
 		}
 		
-
 		@Override
 		public int getKey() {
 			return this.key;
@@ -77,10 +76,5 @@ import gameClient.util.Point3D;
 		public void setTag(int t) {
 			this.tag=t;
 		}
-		public static void main(String[] args) {
-			node_data a=new NodeData(6);
-			a.setInfo("asdasdasda");
-			
-			System.out.println("stam");
-		}
+		
 }
