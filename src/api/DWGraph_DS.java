@@ -14,14 +14,19 @@ public class DWGraph_DS  implements directed_weighted_graph {
 	private HashMap <Integer, HashMap <Integer,edge_data>> edges_TheGragh_WD;
 	private int edgeSize;
 	private int MC;
-
+	/**
+	 * An empty constructor
+	 */
 	public DWGraph_DS() {
 		this.nodes_TheGragh_WD = new HashMap<>();
 		this.edges_TheGragh_WD = new HashMap<>();
 		this.edgeSize = 0;
 		this.MC = 0;
 	}
-
+	/**
+	 * A copy constructor of this WGraph_DS 
+	 * @param otherG
+	 */
 	public DWGraph_DS (directed_weighted_graph gh) {
 		this.MC=gh.getMC();
 		this.edgeSize=gh.edgeSize();
@@ -39,12 +44,21 @@ public class DWGraph_DS  implements directed_weighted_graph {
 			}
 		}
 	}
-
+	/**
+	 * This function return the node_info by the node_id,
+	 * @param key - the node_id
+	 * @return the node_data by the node_id
+	 */
 	@Override
 	public node_data getNode(int key) {
 		return nodes_TheGragh_WD.get(key);
 	}
-
+	/**this function return the weight between 2 nodes that she get (src, dest)
+	 * if there is a edge between them, if not return -1
+	 * @param src
+	 * @param dest
+	 * @return
+	 */    
 	@Override
 	public edge_data getEdge(int src, int dest) {
 		if(nodes_TheGragh_WD.containsKey(src) &&nodes_TheGragh_WD.containsKey(dest)) {
@@ -54,7 +68,10 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}	
-
+	/**
+	 * add a new node to the graph with the given node_data.
+	 * @param n
+	 */
 	@Override
 	public void addNode(node_data n) {
 
@@ -63,7 +80,14 @@ public class DWGraph_DS  implements directed_weighted_graph {
 			MC++;
 		}
 	}
-
+	/**
+	 * Connects an edge with weight w between node src to node dest.
+	 * * Note: this method should run in O(1) time.
+	 * @param src - the source of the edge.
+	 * @param dest - the destination of the edge.
+	 * @param w - positive weight representing the cost (aka time, price, etc) between src-->dest.
+	 */
+	 
 	@Override
 	public void connect(int src, int dest, double w) {
 		if (getNode(src)==null ||getNode(dest)==null) return; 
@@ -90,12 +114,20 @@ public class DWGraph_DS  implements directed_weighted_graph {
 			}
 		}
 	}
-
+	/**
+	 * This method return a pointer for the collection representing all the nodes in the graph.
+	 * @return Collection<node_data>  
+	 */
 	@Override
 	public Collection<node_data> getV() {
 		return this.nodes_TheGragh_WD.values();
 	}
-
+	/**
+	 * This method returns a pointer (shallow copy) for the
+	 * collection representing all the edges getting out of 
+	 * the given node (all the edges starting (source) at the given node). 
+	 * @return Collection<edge_data>
+	 */
 	@Override
 	public Collection<edge_data> getE(int node_id) {
 		if(this.edges_TheGragh_WD.get(node_id)!=null) {
@@ -103,7 +135,12 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}
-
+	/**
+	 * Deletes the node (with the given ID) from the graph -
+	 * and removes all edges which starts or ends at this node.
+	 * @return the data of the removed node (null if none). 
+	 * @param key
+	 */
 	@Override
 	public node_data removeNode(int key) {
 		if(this.nodes_TheGragh_WD.containsKey(key)) {
@@ -130,7 +167,12 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}
-
+	/**
+	 * Deletes the edge from the graph,
+	 * @param src
+	 * @param dest
+	 * @return the data of the removed edge (null if none).
+	 */
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		if(getNode(src)!=null&&getNode(dest)!=null&&this.edges_TheGragh_WD.get(src)!=null&&this.edges_TheGragh_WD.get(src).containsKey(dest)) {		
@@ -140,17 +182,25 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}	
-
+	/** Returns the number of vertices (nodes) in the graph.
+	 * @return nose graph size
+	 */
 	@Override
 	public int nodeSize() {
 		return nodes_TheGragh_WD.size();
 	}
-
+	/** 
+	 * Returns the number of edges (assume directional graph).
+	 * @return edge Size
+	 */
 	@Override
 	public int edgeSize() {
 		return edgeSize;
 	}
-
+	/**
+	 * Returns the Mode Count - for testing changes in the graph.
+	 * @return MC
+	 */
 	@Override
 	public int getMC() {
 		return MC;
