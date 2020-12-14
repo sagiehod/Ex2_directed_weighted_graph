@@ -38,8 +38,8 @@ public class Game_Panel extends JPanel {
 	        super();
 	        this.setOpaque(false);
 	        this.setBackground(Color.WHITE);
-          this.agent=new ImageIcon("./data/ash.jpg").getImage();
-          this.pokemon=new ImageIcon("./data/pica.jpg").getImage();
+          this.agent=new ImageIcon("./data/ash.png").getImage();
+          this.pokemon=new ImageIcon("./data/images.png").getImage();
           this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
           this.setBackground(Color.white);
 //	    	this.addComponentListener((ComponentListener) new ComponentAdapter() {

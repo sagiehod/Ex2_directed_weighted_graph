@@ -113,6 +113,7 @@ public class login_gui implements ActionListener {
         senrio = Integer.parseInt(levelText.getText());
 
        	flag=true;
+       	
 		}
 
 	}

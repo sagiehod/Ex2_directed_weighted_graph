@@ -26,9 +26,16 @@ public class Ex2 implements Runnable{
 	public static void main(String[] a) {
 		login_gui  l = new login_gui();
 		l.chose();
+		music player = new music("Pokemon.mp3");
+		Thread playerThread = new Thread(player);
+		playerThread.start();
 		while(l.flag != true) {
 			System.out.println("");
+			
 		}
+		
+		playerThread.stop();
+		
 		Ex2 start=new Ex2(l.id,l.senrio);
 
 		Thread client = new Thread(start);
