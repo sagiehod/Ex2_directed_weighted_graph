@@ -32,6 +32,11 @@ public class music implements Runnable
 		play();
 	}
 
+	public void finnish() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

@@ -8,10 +8,7 @@ public class EdgeData implements edge_data {
 	private String info;
 	private int tag;
 	
-	/**
-	 * constructor
-	 * @param weight,src,dest
-	 */
+	
 		
 	public EdgeData(double w, int s,int d) {
 		this.dest=d;
@@ -20,10 +17,7 @@ public class EdgeData implements edge_data {
 		this.info="";
 		this.tag=0;
 	    }
-	/**
-	 * A copy constructor of this Edge data 
-	 * @param Edge data e
-	 */
+
 public EdgeData(EdgeData e) {
 	this.weight=e.getWeight();
 	this.dest =e.getDest();

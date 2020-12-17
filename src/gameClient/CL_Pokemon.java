@@ -10,7 +10,9 @@ public class CL_Pokemon {
 	private Point3D _pos;
 	private double min_dist;
 	private int min_ro;
-	
+	 private String img;
+	 
+	 
 	public CL_Pokemon(Point3D p, int t, double v, double s, edge_data e) {
 		_type = t;
 	//	_speed = s;
@@ -20,6 +22,27 @@ public class CL_Pokemon {
 		min_dist = -1;
 		min_ro = -1;
 	}
+	public CL_Pokemon(String s) {
+		 try {
+	            JSONObject Fruits = new JSONObject(s);
+	            JSONObject fruit = Fruits.getJSONObject("Fruit");
+	            String pos = fruit.getString("pos");
+	            this._pos = new Point3D(pos);
+	            this._value = fruit.getDouble("value");
+	            this._type = fruit.getInt("type");
+	            if (this._type == 1) {
+	                this.img = "apple.png";
+	            } else {
+	                this.img = "banana.png";
+	            }
+	            this.min_ro = 0;
+	        }
+	        catch(Exception ex)
+	        {
+	            ex.printStackTrace();
+	        }
+	    }
+	
 	public static CL_Pokemon init_from_json(String json) {
 		CL_Pokemon ans = null;
 		try {

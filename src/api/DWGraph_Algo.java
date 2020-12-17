@@ -31,26 +31,14 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	public DWGraph_Algo() {
 		WGraph=new DWGraph_DS();
 	}
-	/**
-	 * Init this set of algorithms on the parameter - graph.
-	 * @param g
-	 */
 	@Override
 	public void init(directed_weighted_graph g) {
 		this.WGraph=  g;
 	}
-	 /**
-     * Return the underlying graph of which this class works.
-     * @return
-     */
 	@Override
 	public directed_weighted_graph getGraph() {
 		return this.WGraph;
 	}
-	/** 
-	 *  deep copy of this graph.
-	 * @return copyGraph;
-	 */
 	@Override
 	public directed_weighted_graph copy() {
 		directed_weighted_graph copyGraph= new DWGraph_DS (this.WGraph);
@@ -103,11 +91,13 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		if(at.getTag() == at.getWeight()) {
 			while(!stack.isEmpty()) {
 				node_data node=stack.pop();
+				//path
 				node.setInfo("");
 				node.setWeight(at.getTag());
 				if(node==at) break;
 			}
 			sccCount++;
+			//[num comp][path]
 		}
 
 	}

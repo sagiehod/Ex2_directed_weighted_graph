@@ -41,12 +41,8 @@ public class Game_Frame extends JFrame{
 	Game_Frame(String a) {
  
 		super(a);
-		
-       
-
 	}
 
-   
 	public void update(Arena ar) {
 		this._ar = ar;
 		panel = new Game_Panel();

@@ -1,40 +1,29 @@
 package gameClient;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import java.awt.*;
 
 public class login_gui implements ActionListener {
-	
+
 
 	private static JLabel idlabel;
 	private static JTextField idText;
 	private static JLabel levelLabel;
 	private static JTextField levelText;
 	private static JButton button;
-	public boolean flag=false;
-	public  int id=0;
-	public  int senrio=0;
-	
-	public void chose() {
-		
+
 
 	JFrame frame= new JFrame();
-		
-		JPanel panel= new JPanel();
-		
-		
+	JPanel panel= new JPanel();
+	
+	public void chose() {
+
+
+
 		frame.setSize(350,200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -69,53 +58,29 @@ public class login_gui implements ActionListener {
 		frame.setVisible(true);
 
 	}
-
-	public static void main(String[] args) {
-
-		
-
-	}
 	
-//	public void Menu_Panel() {
-//	
-//		JFrame frame;    
-//		JMenuBar menubar;    
-//		JMenu Game_Menu;    
-//		JMenuItem play;    
-//		JTextArea textarea;    
-//		
-//		frame=new JFrame();    
-//		play=new JMenuItem("play");    
-//		play.addActionListener(this);    
-//
-//		menubar=new JMenuBar();    
-//		Game_Menu=new JMenu("Game Menu");    
-//		Game_Menu.add(play);    
-//		menubar.add(Game_Menu);    
-//		textarea=new JTextArea();    
-//		
-//		textarea.setBounds(5,5,360,320);    
-//		frame.add(menubar);frame.add(textarea);    
-//		frame.setJMenuBar(menubar);  
-//		frame.setLayout(null);    
-//		
-//		frame.setSize(420,420);    
-//		frame.setVisible(true);    
-//		
-//		}     
-		
-		
+	
+	public void exit() {
+		frame.setVisible(false); //you can't see me!
+		frame.dispose(); //Destroy the JFrame object
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-        id = Integer.parseInt(idText.getText());
-        senrio = Integer.parseInt(levelText.getText());
-
-       	flag=true;
-       	
+		int id = Integer.parseInt(idText.getText());
+		int senrio = Integer.parseInt(levelText.getText());
+		if(idText.getText().length()==9) {
+			Ex2 start=new Ex2(id,senrio);
+			Thread client = new Thread(start);
+			client.start();
+			exit();
 		}
-
 	}
+
+public static void main(String[] args) {
+
+}
+}
 
 

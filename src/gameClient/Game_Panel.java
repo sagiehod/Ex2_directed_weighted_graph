@@ -1,38 +1,32 @@
 package gameClient;
 
 import api.*;
-import gameClient.CL_Agent;
-import gameClient.CL_Pokemon;
 import gameClient.util.Point3D;
 import gameClient.util.Range;
 import gameClient.util.Range2D;
-import gameClient.util.Range2Range;
 import javax.swing.*;
+
+import Server.Game_Server_Ex2;
+
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class Game_Panel extends JPanel {
 	// static Clip clip;
-	    private int _ind;
-	    private My_Game _gm;
         private Arena _ar;
 		private gameClient.util.Range2Range _w2f;
 	     private Image agent;
 	     private Image pokemon;
 	     private Image backgraound;
-		private String path;
+		private Image rarePokemon;
 		
 		public static int scenario_num;
 		public static Arena arena= new Arena();
-	
-
 
 	    Game_Panel() {
 	        super();
@@ -40,21 +34,11 @@ public class Game_Panel extends JPanel {
 	        this.setBackground(Color.WHITE);
           this.agent=new ImageIcon("./data/ash.png").getImage();
           this.pokemon=new ImageIcon("./data/images.png").getImage();
+          this.rarePokemon=new ImageIcon("./data/rare.png").getImage();
           this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
           this.setBackground(Color.white);
-//	    	this.addComponentListener((ComponentListener) new ComponentAdapter() {
-//			@Override
-//			public void componentResized(ComponentEvent e) {
-//				updateFrame();
-//			}
-//		});
 	    }
 
-	    public void update(My_Game gm) {
-	        this._gm = gm;
-	    //    updatePanel();
-	
-	    }
 		  Game_Panel(String a) {
 		//	super(a);
 			this.addComponentListener((ComponentListener) new ComponentAdapter() {
@@ -64,7 +48,6 @@ public class Game_Panel extends JPanel {
 				}
 			});
 		}
-
 
 		public void update(Arena ar) {
 			this._ar = ar;
@@ -89,10 +72,14 @@ public class Game_Panel extends JPanel {
 			drawGraph(g);
 			drawAgants(g);
 			drawInfo(g);
+			
 			//drawTimer(g);
 			drawScore(g);
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial",Font.BOLD,18));
 			String s="Time: "+Game_Frame.timeToEnd + "     num senrio "+ Game_Frame.senrio;
 			g.drawString(s, 50, 100);
+			
 
 		}
 		private void drawInfo(Graphics g) {
@@ -139,8 +126,15 @@ public class Game_Panel extends JPanel {
 						geo_location fp = this._w2f.world2frame(c);
 						//fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
 						//	g.drawString(""+n.getKey(), fp.ix(), fp.iy()-4*r);
+						if(f.getValue()>7) {
+						g.drawImage(rarePokemon,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
+						}
+						else {
 					g.drawImage(pokemon,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
-	
+		
+						}
+						g.setColor(Color.red);
+						g.drawString("" + f.getValue(), (int)fp.x()-r, (int)fp.y()-r);
 					}
 				}
 			}
@@ -153,18 +147,18 @@ public class Game_Panel extends JPanel {
 			while(rs!=null && i<rs.size()) {
 				geo_location c = rs.get(i).getLocation();
 				int r=8;
+				String s="agent "+rs.get(i).getID()+" :	 "+rs.get(i).getValue();
 				i++;
 				if(c!=null) {
 	
 					geo_location fp = this._w2f.world2frame(c);
 					//g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
-					g.drawImage(agent,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
-					try {
-					g.drawString("agent "+rs.get(i).getID()+" :	 "+rs.get(i).getValue(),(int)fp.x()-r, (int)(fp.y()-4*r));
-				
-					}catch(IndexOutOfBoundsException e) {
-						
-					}
+					g.drawImage(agent,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
+		
+					g.drawString(s,(int)fp.x()-r, (int)(fp.y()-4*r));
+				g.drawString(rs.get(i-1).getSpeed()+ " ", 800,100+i*30);
+				g.drawString((long)(rs.get(i-1).getLocation().x()*10000000000l)+ " "+ (long)(rs.get(i-1).getLocation().y()*10000000000l)+ " ",850, 100+i*30);
+			
 				}
 			}
 		}

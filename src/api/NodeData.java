@@ -9,7 +9,8 @@ import gameClient.util.Point3D;
 		private String info;
 		private int tag;	
 		/**
-		 * constructor empty of NodeInfo
+		 * constructor of NodeInfo
+		 * @param i 
 		 */
 		
 		public NodeData()  {
@@ -19,11 +20,6 @@ import gameClient.util.Point3D;
 			tag=0;
 			weight=Double.POSITIVE_INFINITY;
 		}
-		/**
-		 * constructor   of NodeInfo
-		 * @param i
-		 */
-		
 		public NodeData(int i)  {
 			key=i;
 			this.GLocation = new Point3D(0,0,0);
@@ -33,7 +29,7 @@ import gameClient.util.Point3D;
 		}
 		/**
 		 * A copy constructor of this NodeData
-		 * @param others
+		 * @param other
 		 */
 		public NodeData(node_data other) {
 			this.key=other.getKey();
