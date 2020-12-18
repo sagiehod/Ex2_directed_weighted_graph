@@ -32,7 +32,6 @@ import gameClient.util.Range2D;
 
 
 public class Game_Frame extends JFrame{
-	// static Clip clip;
 	private Arena _ar;
 	private gameClient.util.Range2Range _w2f;
 	private Game_Panel panel;
@@ -67,7 +66,6 @@ public class Game_Frame extends JFrame{
 
 
 	public void print_time(long timeToEnd, int senrio) {
-
 this.timeToEnd=timeToEnd;
 this.senrio=senrio;
 	}

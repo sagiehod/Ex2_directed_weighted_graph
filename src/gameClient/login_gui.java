@@ -22,12 +22,8 @@ public class login_gui implements ActionListener {
 	
 	public void chose() {
 
-
-
 		frame.setSize(350,200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setLayout(new FlowLayout(FlowLayout.LEADING));
-		//frame.setLayout(new FlowLayout(FlowLayout.CENTER));
 		frame.add(panel);
 		frame.setLocationRelativeTo(null); // make thr GUI shows in the middle
 
@@ -54,11 +50,9 @@ public class login_gui implements ActionListener {
 		panel.add(button);
 		button.addActionListener(this);  
 
-
 		frame.setVisible(true);
 
 	}
-	
 	
 	public void exit() {
 		frame.setVisible(false); //you can't see me!

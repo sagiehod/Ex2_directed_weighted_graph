@@ -24,6 +24,7 @@ public class Game_Panel extends JPanel {
 	     private Image pokemon;
 	     private Image backgraound;
 		private Image rarePokemon;
+		private Image charizard;
 		
 		public static int scenario_num;
 		public static Arena arena= new Arena();
@@ -37,7 +38,10 @@ public class Game_Panel extends JPanel {
           this.rarePokemon=new ImageIcon("./data/rare.png").getImage();
           this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
           this.setBackground(Color.white);
+        //  charizard = Toolkit.getDefaultToolkit().createImage("resource/charizard.gif");
+
 	    }
+	    
 
 		  Game_Panel(String a) {
 		//	super(a);
@@ -48,6 +52,20 @@ public class Game_Panel extends JPanel {
 				}
 			});
 		}
+//		  public static void importPictures() {
+//		        try {
+//		            background = ImageIO.read(new File("resource/background.jpg"));
+//		            logo = ImageIO.read(new File("resource/logo.png"));
+//		            blur = ImageIO.read(new File("resource/blur.png"));
+//		            ash = Toolkit.getDefaultToolkit().createImage("resource/ash.gif");
+//		            pokador = ImageIO.read(new File("resource/pokador.png"));
+//		            pikachu = Toolkit.getDefaultToolkit().createImage("resource/pikachu.gif");
+//		            charizard = Toolkit.getDefaultToolkit().createImage("resource/charizard.gif");
+//		            mewtwo = Toolkit.getDefaultToolkit().createImage("resource/mewtwo.gif");
+//		        } catch (Exception ex) {
+//		            ex.printStackTrace();
+//		        }
+//		    }
 
 		public void update(Arena ar) {
 			this._ar = ar;
@@ -126,6 +144,10 @@ public class Game_Panel extends JPanel {
 						geo_location fp = this._w2f.world2frame(c);
 						//fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
 						//	g.drawString(""+n.getKey(), fp.ix(), fp.iy()-4*r);
+					//	 if( f.getValue()>12) {
+						//		g.drawImage(charizard,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
+
+						// }
 						if(f.getValue()>7) {
 						g.drawImage(rarePokemon,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
 						}
