@@ -12,7 +12,10 @@ import gameClient.util.Point3D;
 		 * constructor of NodeInfo
 		 * @param i 
 		 */
-		
+		/**
+		 *   a empty constructor of this NodeData
+		 *
+		 */
 		public NodeData()  {
 			key=idCounter++;
 			this.GLocation = new Point3D(0,0,0);
@@ -20,6 +23,10 @@ import gameClient.util.Point3D;
 			tag=0;
 			weight=Double.POSITIVE_INFINITY;
 		}
+		/**
+		 *  constructor of this NodeData
+		 * @param i
+		 */
 		public NodeData(int i)  {
 			key=i;
 			this.GLocation = new Point3D(0,0,0);

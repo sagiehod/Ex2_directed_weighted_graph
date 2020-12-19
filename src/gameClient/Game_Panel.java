@@ -38,7 +38,7 @@ public class Game_Panel extends JPanel {
 		super();
 		this.setOpaque(false);
 		this.setBackground(Color.WHITE);
-		this.agent=new ImageIcon("./data/ash.png").getImage();
+		this.agent=new ImageIcon("./data/images.PNG ").getImage();
 		this.charmander=Toolkit.getDefaultToolkit().createImage("./data/charmander.gif");
 		this.charmeleon=Toolkit.getDefaultToolkit().createImage("./data/charmeleon.gif");
 		this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
@@ -65,20 +65,6 @@ public class Game_Panel extends JPanel {
 			}
 		});
 	}
-	//		  public static void importPictures() {
-	//		        try {
-	//		            background = ImageIO.read(new File("resource/background.jpg"));
-	//		            logo = ImageIO.read(new File("resource/logo.png"));
-	//		            blur = ImageIO.read(new File("resource/blur.png"));
-	//		            ash = Toolkit.getDefaultToolkit().createImage("resource/ash.gif");
-	//		            pokador = ImageIO.read(new File("resource/pokador.png"));
-	//		            pikachu = Toolkit.getDefaultToolkit().createImage("resource/pikachu.gif");
-	//		            charizard = Toolkit.getDefaultToolkit().createImage("resource/charizard.gif");
-	//		            mewtwo = Toolkit.getDefaultToolkit().createImage("resource/mewtwo.gif");
-	//		        } catch (Exception ex) {
-	//		            ex.printStackTrace();
-	//		        }
-	//		    }
 
 	public void update(Arena ar) {
 		this._ar = ar;

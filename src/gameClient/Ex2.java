@@ -45,20 +45,27 @@ public class Ex2 implements Runnable{
 
 		music player = new music("Pokemon.mp3");
 		Thread playerThread = new Thread(player);
-		playerThread.start();
+		
 		if(a.length==0) {
 			login_gui  l = new login_gui();
 			l.chose();
+		//	playerThread.start();
+			
 		}else 
 		{
 			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
 			Thread client = new Thread(start);
-			client.start();	
-		}
-		if(playerThread.isAlive()) {
-			run.set(false);
-		}
-		playerThread.stop();
+			client.start();
+		
+//			while(!client.isAlive())	{
+//				//playerThread.stop();
+//			}
+		
+				
+					
+				}
+
+	
 	}
 	/**
 	 * run the game
@@ -74,7 +81,6 @@ public class Ex2 implements Runnable{
 		String pks = game.getPokemons();
 		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
 		init(game);
-
 		game.startGame();
 		_win.setTitle("Ex2 - OOP: (NONE trivial Solution) "+game.toString());
 		int ind=0;
@@ -106,7 +112,14 @@ public class Ex2 implements Runnable{
 
 		System.exit(0);
 	}
-
+	/**
+	 * Calculate the transition time to the second transition
+	 * Thinks how long each agent has until the next event, 
+	 * that the next event can reach its vertex (dest) or reach the earlier Pokemon of the two
+	 *@param game_service game
+	 *@param directed_weighted_graph gg
+	 *@param string lg
+	 */
 	private long calcTimeToNextEvent(game_service game, directed_weighted_graph gg, String lg) {
 		long time = 200;
 		long maxTime = 0;
@@ -145,8 +158,10 @@ public class Ex2 implements Runnable{
 		return time+20;
 	}
 	/** 
-	 * Moves each of the agents along the edge,
-	 * in case the agent is on a node the next destination (next edge) is chosen (randomly).
+	 * Moves each of the agents along the edge,by some Conditions.
+	 * in case the agent is on a node the next destination (next edge) is chosen (randomly)
+	 *  and Sending the agent each time to his next rib as part of the path to the rib that the Pokemon is on,
+	 *  she calculates for each agent the vertex he needs to reach..
 	 * @param game
 	 * @param gg
 	 * @param
@@ -205,6 +220,18 @@ public class Ex2 implements Runnable{
 		}
 		return lg;
 	}
+	/**
+	 * We created a getEdgeClose function where we check for each agent which Pokemon is closest to it and we did this using the DWGraph_Algo class
+	 *  where we used the Dijkstra algorithm to find the shortestpathDist which checks the shortest path and returns the weight of the edge (dest) and finds the shortest path for each agent. 
+	 * Which is closest to it. And there it is sent. The location is defined by its side has src, dest))
+	 *  and dest is the vertex to which it should reach.
+     *  Next, we used the init function which loads the graph, gets the list of agents and by the function we created places them, 
+     *    and the Pokemon positions by the Arena class and places them in the graph.
+     *   Then we used the shortestpath function (which is based on the Dijkstra's algorithm) to save the shortest route
+	 * @param src
+	 * @param log
+	 * @return ans -pokemon
+	 */
 	private static CL_Pokemon getEdgeClose( int src, List<CL_Agent> log) {
 		//init graph algo
 		algo.init(graph);

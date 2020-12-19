@@ -61,6 +61,15 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	Stack<node_data> stack=new Stack<node_data>();
 	int sccCount=0;
 	int id=0;
+/**
+ * Nodes are placed on a pile in the order of their visit. 
+ * When the first depth search recursively visits the v node and its descendants,
+ *  not all of these nodes are necessarily sucked out of the pile when this recursive call returns. 
+ *  The essential unchanging characteristic is that a node remains in a stack after its visit 
+ *  if and only if there is a path in the input graph from it to some node earlier in the stack.
+ *   In other words, it means that in DFS a node is only removed from the stack after all its connected paths have been crossed. 
+ *   When the DFS goes back it will remove the nodes in a single path and return to the root to start a new path.
+ */
 
 	@Override
 	public boolean isConnected() {
@@ -69,8 +78,8 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 		init_nodes();
 		stack=new Stack<node_data>();
-		 sccCount=0;
-		 id=0;
+		sccCount=0;
+		id=0;
 		for(node_data i: this.WGraph.getV()) {
 			if(i.getTag()==0) {
 				dfs(i);
@@ -113,15 +122,15 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 
 	}
-/**
- *  * @param src
+	/**
+	 *  * @param src
 	 * @param dest
 	 * This function uses the Dijkstra's algorithm to find the shortest path between src and dest 
 	 * and the function returns the weight of the dest which should be the lowest weight
 	 *@return the length of the shortest path between src to dest
 	 */
 
- 
+
 	@Override
 	public double shortestPathDist(int src, int dest) {
 
@@ -143,7 +152,16 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 	}
 
-
+	/**
+	 this function uses the Dijkstra's algorithm to finds the shortest path between src and dest 
+	 and returns a list of the nodes through which we passed.
+	 This list contains the ancestors of the nodes through which we passed.
+    The list was made by the hashmap that for each current node puts into the container the node that 
+    brought us to the current node which is its parent node
+	 @param src - start node
+	 * @param dest - end (target) node
+	 * @return 
+	 * */
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		if(WGraph.getNode(src)==null||WGraph.getNode(dest)==null) 
@@ -188,7 +206,31 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 	}
 
-
+	/**
+	 * 
+	 * Dijkstra's algorithm: An algorithm for finding the shortest paths between nodes in a graph
+he gets 2 nodes- src and -dest should get from the src node to the dest node and go through the nodes with the lowest weight.
+ The algorithm works as follows:
+We will first initialize all the weights of the nodes to infinity so that we know which node we have not yet updated,
+ and then we set a priority queue that will contain the nodes we will visit and update their weights.
+In addition, we set the Hashmap to initialize all nodes in false.
+Each node he visited will be marked as a visit (correct), and that way we will know if we visited this node or not, 
+and finally, if there is such a node, then he is not connected to the other node and he will remain marked as false.
+.
+In the priority queue, we enter the first node and initialize its weight to 0,
+ and all the other nodes in the graph are initialized to infinity. 
+ For the current junction,we will include all its neighbors and update their temporary weights.
+The weight of each node is updated according to the parent weight of that node plus the temporary distance between them which is the weight on the edge.
+Then the same node we started with becomes the father of this node and leaves the queue, 
+it is marked as one we have already visited and we will not return to it again. Each of the introduced neighbors treats him the same way: putting his neighbors in line and updating their weights.
+so if one of the neighbors is already updated with weight because we reached it through another father-node, then we will check through which neighbor that node will have the lowest weight, then we will keep the lower weight. We will take the node out of the queue and return it with the updated weight. To the same junction is also updated the new father through which we reached a junction with a lower weight.
+  And so for each node up to the node, we set to reach in the graph.
+	 * @param src
+	 * @param dest
+	 * This function uses the Dijkstra's algorithm to find the shortest path between src and dest 
+	 * and the function returns the weight of the dest which should be the lowest weight
+	 *@return parentNodes
+	 */
 	private  Map<node_data, node_data> dijkstra (int src , int dest) {
 		init_nodes();
 		PriorityQueue<node_data> queue = new PriorityQueue<node_data>(new Comparator<node_data>() {
@@ -211,26 +253,26 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 			for (edge_data e :  WGraph.getE(u.getKey())){
 				node_data v= this.WGraph.getNode(e.getDest());
 				//if( v.getTag()==0) {
-					double dist = u.getWeight()+e.getWeight();
-					if (dist < v.getWeight()) {       
-						v.setWeight(dist);
-						parentNodes.put(v, u);
-						queue.remove(v);
-						queue.add(v);
-					}
+				double dist = u.getWeight()+e.getWeight();
+				if (dist < v.getWeight()) {       
+					v.setWeight(dist);
+					parentNodes.put(v, u);
+					queue.remove(v);
+					queue.add(v);
 				}
+			}
 			//}
 			//u.setTag(1);
 		}
 		return parentNodes;
-}
+	}
 
-    /**
-     * Saves this weighted (directed) graph to the given
-     * file name - in JSON format
-     * @param file - the file name (may include a relative path).
-     * @return true - iff the file was successfully saved
-     */
+	/**
+	 * Saves this weighted (directed) graph to the given
+	 * file name - in JSON format
+	 * @param file - the file name (may include a relative path).
+	 * @return true - iff the file was successfully saved
+	 */
 	@Override
 	public boolean save(String file) {
 		try {
@@ -273,14 +315,14 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 		return true;
 	}
-	  /**
-     * This method load a graph to this graph algorithm.
-     * if the file was successfully loaded - the underlying graph
-     * of this class will be changed (to the loaded one), in case the
-     * graph was not loaded the original graph should remain "as is".
-     * @param file - file name of JSON file
-     * @return true - iff the graph was successfully loaded.
-     */
+	/**
+	 * This method load a graph to this graph algorithm.
+	 * if the file was successfully loaded - the underlying graph
+	 * of this class will be changed (to the loaded one), in case the
+	 * graph was not loaded the original graph should remain "as is".
+	 * @param file - file name of JSON file
+	 * @return true - iff the graph was successfully loaded.
+	 */
 	@Override
 	public boolean load(String file) {
 		try {
