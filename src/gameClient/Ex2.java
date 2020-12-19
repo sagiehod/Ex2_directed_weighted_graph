@@ -28,14 +28,19 @@ public class Ex2 implements Runnable{
 	private static dw_graph_algorithms algo= new DWGraph_Algo();;
 	private static List<CL_Pokemon> ffs = new ArrayList<>();
 	private static directed_weighted_graph graph;
-
+	/**
+	 * constructor of Ex2
+	 * @param id2
+	 * @param senrio2
+	 * 
+	 */
 	//constructor
 	public Ex2(int id2, int senrio2) {
 		this.id=id2;
 		this.senrio=senrio2;
 	}
 
-	
+
 	public static void main(String[] a) {
 
 		music player = new music("Pokemon.mp3");
@@ -55,7 +60,12 @@ public class Ex2 implements Runnable{
 		}
 		playerThread.stop();
 	}
-
+	/**
+	 * run the game
+	 * init the game(graph)
+	 * get the frame(gui)  and all the data
+	 * 
+	 */
 	@Override
 	public void run() {
 		game_service game = Game_Server_Ex2.getServer(senrio); // you have [0,23] games
@@ -96,6 +106,7 @@ public class Ex2 implements Runnable{
 
 		System.exit(0);
 	}
+
 	private long calcTimeToNextEvent(game_service game, directed_weighted_graph gg, String lg) {
 		long time = 200;
 		long maxTime = 0;
@@ -223,9 +234,16 @@ public class Ex2 implements Runnable{
 		}
 		return ans;
 	}
-	
+	/**
+	 * init the game
+	 * get the Pokemons and Agents from the data
+	 *  places the Agents in the Arena.
+	 * init the GUI .
+	 *
+	 * @param game a game_service type.
+	 */
 	private void init(game_service game) {
-		
+
 		String g = game.getGraph();
 		String fs = game.getPokemons();
 		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
@@ -253,7 +271,11 @@ public class Ex2 implements Runnable{
 		}
 		catch (JSONException e) {e.printStackTrace();}
 	}
-
+	/**
+	 * Positions the agent in a strategic place in the start
+	 *param numberOfAgents
+	 * @param  pokemons
+	 */
 	public static void agentsFirstPlaceByValue(ArrayList<CL_Pokemon> pokemons, int numberOfAgents, 
 			dw_graph_algorithms g_algo, game_service game) {
 		Collections.sort(pokemons, new Comparator<CL_Pokemon>() {

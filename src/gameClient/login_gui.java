@@ -19,7 +19,11 @@ public class login_gui implements ActionListener {
 
 	JFrame frame= new JFrame();
 	JPanel panel= new JPanel();
-	
+
+	/**
+	 * build the menu
+	 * login : enter the id , level.
+	 */
 	public void chose() {
 
 		frame.setSize(350,200);
@@ -53,11 +57,17 @@ public class login_gui implements ActionListener {
 		frame.setVisible(true);
 
 	}
-	
+	/**
+	 * Exit as soon as you stop using.
+	 */
 	public void exit() {
 		frame.setVisible(false); //you can't see me!
 		frame.dispose(); //Destroy the JFrame object
 	}
+	/**
+	 * Exercise the action
+	 * param e 
+	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

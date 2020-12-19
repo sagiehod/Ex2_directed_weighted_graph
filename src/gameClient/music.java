@@ -10,6 +10,9 @@ public class music implements Runnable {
 	{
 		this.path = path;
 	}
+	/**
+	 * Play the music for the game
+	 */
 	public void play()
 	{
 		try
@@ -25,6 +28,9 @@ public class music implements Runnable {
 	}
 
 	@Override
+	/**
+	 * play music 
+	 */
 	public void run() 
 	{
 		play();

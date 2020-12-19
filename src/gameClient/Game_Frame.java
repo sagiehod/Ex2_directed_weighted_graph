@@ -36,9 +36,12 @@ public class Game_Frame extends JFrame{
 	private gameClient.util.Range2Range _w2f;
 	private Game_Panel panel;
 	static long timeToEnd=0;static int senrio=0;
-	
+
+	/**
+	 * a default constructor.
+	 */
 	Game_Frame(String a) {
- 
+
 		super(a);
 	}
 
@@ -48,6 +51,9 @@ public class Game_Frame extends JFrame{
 		this.add(panel);
 		updateFrame();
 	}
+	/**
+	 * This method is used  resize to   frame 
+	 */
 	private void updateFrame() {
 		Range rx = new Range(20,this.getWidth()-20);
 		Range ry = new Range(this.getHeight()-10,150);
@@ -58,16 +64,23 @@ public class Game_Frame extends JFrame{
 		panel.repaint();
 	}
 
-
+	/**
+	 * paint all  the frame
+	 * @param g The Graphics 
+	 */
 	public void paint(Graphics g) {
 		updateFrame();
 
 	}
 
-
+	 /**
+     * when the game run is tell us the the senrio and How much time is left until the end of the game
+     * @param timeToEnd 
+     * @param senrio
+     */
 	public void print_time(long timeToEnd, int senrio) {
-this.timeToEnd=timeToEnd;
-this.senrio=senrio;
+		this.timeToEnd=timeToEnd;
+		this.senrio=senrio;
 	}
 }
 

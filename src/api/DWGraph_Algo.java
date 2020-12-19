@@ -31,14 +31,26 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	public DWGraph_Algo() {
 		WGraph=new DWGraph_DS();
 	}
+	/**
+	 *  Init this set of algorithms on the parameter - graph.
+	 *  @param g
+	 */
 	@Override
 	public void init(directed_weighted_graph g) {
 		this.WGraph=  g;
 	}
+	/**
+	 * Return the underlying graph of which this class works.
+	 * @return
+	 */
 	@Override
 	public directed_weighted_graph getGraph() {
 		return this.WGraph;
 	}
+	/**
+	 * This function sends to the copy constructor and compute a deep copy of this graph
+	 *  @return the copied graph.
+	 */
 	@Override
 	public directed_weighted_graph copy() {
 		directed_weighted_graph copyGraph= new DWGraph_DS (this.WGraph);
@@ -101,6 +113,15 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 
 	}
+/**
+ *  * @param src
+	 * @param dest
+	 * This function uses the Dijkstra's algorithm to find the shortest path between src and dest 
+	 * and the function returns the weight of the dest which should be the lowest weight
+	 *@return the length of the shortest path between src to dest
+	 */
+
+ 
 	@Override
 	public double shortestPathDist(int src, int dest) {
 
@@ -204,6 +225,12 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		return parentNodes;
 }
 
+    /**
+     * Saves this weighted (directed) graph to the given
+     * file name - in JSON format
+     * @param file - the file name (may include a relative path).
+     * @return true - iff the file was successfully saved
+     */
 	@Override
 	public boolean save(String file) {
 		try {
@@ -246,7 +273,14 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		}
 		return true;
 	}
-
+	  /**
+     * This method load a graph to this graph algorithm.
+     * if the file was successfully loaded - the underlying graph
+     * of this class will be changed (to the loaded one), in case the
+     * graph was not loaded the original graph should remain "as is".
+     * @param file - file name of JSON file
+     * @return true - iff the graph was successfully loaded.
+     */
 	@Override
 	public boolean load(String file) {
 		try {
