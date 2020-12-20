@@ -19,6 +19,7 @@ public class login_gui implements ActionListener {
 
 	JFrame frame= new JFrame();
 	JPanel panel= new JPanel();
+	private Thread playerThread;
 
 	/**
 	 * build the menu
@@ -55,6 +56,9 @@ public class login_gui implements ActionListener {
 		button.addActionListener(this);  
 
 		frame.setVisible(true);
+		music player = new music("Pokemon.mp3");
+		Thread playerThread = new Thread(player);
+		playerThread.start();
 
 	}
 	/**
@@ -75,9 +79,13 @@ public class login_gui implements ActionListener {
 		int id = Integer.parseInt(idText.getText());
 		int senrio = Integer.parseInt(levelText.getText());
 		if(idText.getText().length()==9) {
+			playerThread.stop();
 			Ex2 start=new Ex2(id,senrio);
+			
 			Thread client = new Thread(start);
+			
 			client.start();
+			
 			exit();
 		}
 	}

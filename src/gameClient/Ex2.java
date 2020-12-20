@@ -42,14 +42,14 @@ public class Ex2 implements Runnable{
 
 
 	public static void main(String[] a) {
-
-		music player = new music("Pokemon.mp3");
-		Thread playerThread = new Thread(player);
+//
+//		music player = new music("Pokemon.mp3");
+//		Thread playerThread = new Thread(player);
 		
 		if(a.length==0) {
 			login_gui  l = new login_gui();
 			l.chose();
-		//	playerThread.start();
+	
 			
 		}else 
 		{
