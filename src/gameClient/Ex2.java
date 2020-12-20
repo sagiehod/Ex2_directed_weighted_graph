@@ -42,24 +42,42 @@ public class Ex2 implements Runnable{
 
 
 	public static void main(String[] a) {
+login_gui  l = new login_gui();
+		l.chose();
+		music player = new music("Pokemon.mp3");
+		Thread playerThread = new Thread(player);
+		playerThread.start();
+		while(l.flag != true) {
+			System.out.println("");
+			
+		}
+		
+		playerThread.stop();
+		
+		Ex2 start=new Ex2(l.id,l.senrio);
 
+		Thread client = new Thread(start);
+		client.start();
+	}
+		
+		
 		//music player = new music("Pokemon.mp3");
 		//Thread playerThread = new Thread(player);
 		
-		if(a.length==0) {
-			login_gui  l = new login_gui();
-			l.chose();
-	
-			
-		}else 
-		{
-			
-			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
-			Thread client = new Thread(start);
-			client.start();	
-					
-				}
-	}
+//		if(a.length==0) {
+//			login_gui  l = new login_gui();
+//			l.chose();
+//	
+//			
+//		}else 
+//		{
+//			
+//			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
+//			Thread client = new Thread(start);
+//			client.start();	
+//					
+//				}
+//	}
 	/**
 	 * run the game
 	 * init the game(graph)
@@ -226,13 +244,13 @@ public class Ex2 implements Runnable{
 		algo.init(graph);
 		// init variable
 		CL_Pokemon ans = null;
-		//CL_Pokemon ans1 = null;
+		CL_Pokemon ans1 = null;
 		if(!Ex2.ffs.isEmpty()) {
 		 ans = Ex2.ffs.get(0);
-		// ans1 =  Ex2.ffs.get(0);
+		 ans1 =  Ex2.ffs.get(0);
 		}
 		double path_min= Double.POSITIVE_INFINITY;
-		//double path_min2= Double.POSITIVE_INFINITY;
+		double path_min2= Double.POSITIVE_INFINITY;
 		double dest=-1;
 
 		
@@ -250,18 +268,18 @@ public class Ex2 implements Runnable{
 				dest= algo.shortestPathDist(src,pokemon.get_edge().getSrc());
 				
 				if(dest<path_min )	{ 
-			//		path_min2 = path_min;
+					path_min2 = path_min;
 					path_min=dest;	
 					ans = pokemon;
 				}
-//				else if(dest<path_min2  ){
-//					path_min2 = dest;
-//					ans1 = pokemon;
-//				}
+				else if(dest<path_min2  ){
+					path_min2 = dest;
+					ans1 = pokemon;
+				}
 			}
 		}
 		
-	//	if (ans.getValue() < ans1.getValue() && path_min-path_min2==3) return ans1;
+		if (ans.getValue() < ans1.getValue() && path_min-path_min2==3) return ans1;
 		return ans;
 	}
 	/**

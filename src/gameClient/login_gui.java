@@ -15,12 +15,13 @@ public class login_gui implements ActionListener {
 	private static JLabel levelLabel;
 	private static JTextField levelText;
 	private static JButton button;
+///
+	public boolean flag=false;
+	public  int id=0;
+	public  int senrio=0;
 
-
-	JFrame frame= new JFrame();
-	JPanel panel= new JPanel();
-	private music player = new music("Pokemon.mp3");
-	private Thread playerThread = new Thread(player);
+//	private music player = new music("Pokemon.mp3");
+//	private Thread playerThread = new Thread(player);
 
 	/**
 	 * build the menu
@@ -28,6 +29,8 @@ public class login_gui implements ActionListener {
 	 */
 	public void chose() {
 
+	JFrame frame= new JFrame();
+	JPanel panel= new JPanel();
 		frame.setSize(350,200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
@@ -58,16 +61,16 @@ public class login_gui implements ActionListener {
 
 		frame.setVisible(true);
 		
-		playerThread.start();
+		//playerThread.start();
 
 	}
 	/**
 	 * Exit as soon as you stop using.
 	 */
-	public void exit() {
-		frame.setVisible(false); //you can't see me!
-		frame.dispose(); //Destroy the JFrame object
-	}
+//	public void exit() {
+//		frame.setVisible(false); //you can't see me!
+//		frame.dispose(); //Destroy the JFrame object
+//	}
 	/**
 	 * Exercise the action
 	 * param e 
@@ -76,19 +79,25 @@ public class login_gui implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		int id = Integer.parseInt(idText.getText());
-		int senrio = Integer.parseInt(levelText.getText());
-		if(idText.getText().length()==9) {
-			
-			Ex2 start=new Ex2(id,senrio);
-			
-			Thread client = new Thread(start);
-			
-			client.start();
-			playerThread.stop();
-			exit();
+		id = Integer.parseInt(idText.getText());
+        senrio = Integer.parseInt(levelText.getText());
+
+       	flag=true;
+		
+		
+//		int id = Integer.parseInt(idText.getText());
+//		int senrio = Integer.parseInt(levelText.getText());
+//		if(idText.getText().length()==9) {
+//			
+//			Ex2 start=new Ex2(id,senrio);
+//			
+//			Thread client = new Thread(start);
+//			
+//			client.start();
+//			playerThread.stop();
+//			exit();
 		}
-	}
+	
 
 public static void main(String[] args) {
 
