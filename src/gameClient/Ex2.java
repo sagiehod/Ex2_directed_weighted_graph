@@ -42,9 +42,9 @@ public class Ex2 implements Runnable{
 
 
 	public static void main(String[] a) {
-//
-//		music player = new music("Pokemon.mp3");
-//		Thread playerThread = new Thread(player);
+
+		//music player = new music("Pokemon.mp3");
+		//Thread playerThread = new Thread(player);
 		
 		if(a.length==0) {
 			login_gui  l = new login_gui();
@@ -53,19 +53,12 @@ public class Ex2 implements Runnable{
 			
 		}else 
 		{
+			
 			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
 			Thread client = new Thread(start);
-			client.start();
-		
-//			while(!client.isAlive())	{
-//				//playerThread.stop();
-//			}
-		
-				
+			client.start();	
 					
 				}
-
-	
 	}
 	/**
 	 * run the game
@@ -77,8 +70,6 @@ public class Ex2 implements Runnable{
 	public void run() {
 		game_service game = Game_Server_Ex2.getServer(senrio); // you have [0,23] games
 
-		String g = game.getGraph();
-		String pks = game.getPokemons();
 		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
 		init(game);
 		game.startGame();
@@ -95,7 +86,6 @@ public class Ex2 implements Runnable{
 			String lg = moveAgants(game, gg);
 			dt = calcTimeToNextEvent(game, gg, lg);
 			_win.repaint();
-
 			long seconds = TimeUnit.MILLISECONDS.toSeconds(game.timeToEnd());
 			_win.print_time(seconds,senrio);
 			try {
@@ -109,7 +99,6 @@ public class Ex2 implements Runnable{
 		}
 
 		System.out.println(game.toString());
-
 		System.exit(0);
 	}
 	/**
@@ -139,7 +128,7 @@ public class Ex2 implements Runnable{
 				if(p.get_edge() == e) onEdge.add(p);
 			}
 			if(onEdge.isEmpty()) {
-				System.out.println("Next is: " + a.getNextNode());
+			
 				long t = (long) (200000*gg.getNode(a.getNextNode()).getLocation().distance(pos)/(speed/2));
 				if(t < time) time = t;
 				if(t > maxTime) maxTime = t;
@@ -147,13 +136,13 @@ public class Ex2 implements Runnable{
 			else {
 				for(CL_Pokemon p : onEdge) {
 					noPokemon = false;
-					System.out.println("Pokemon!");
+				
 					long t = (long) (100000*p.getLocation().distance(pos)/speed);
 					if(t < time) time = maxTime = t;
 				}
 			}
 		}
-		System.out.println("moves:" + move + " waiting: " + time+20);
+		
 		if(noPokemon) return 220;
 		return time+20;
 	}
@@ -187,7 +176,7 @@ public class Ex2 implements Runnable{
 			queue.add(ag);
 		}
 		for(CL_Agent agent: queue) {
-			// if agent move to pokemon continuo
+			// if agent move to pokemon continue
 			CL_Agent ag =agent;
 			int id = ag.getID();
 			int dest = ag.getNextNode();
@@ -237,11 +226,18 @@ public class Ex2 implements Runnable{
 		algo.init(graph);
 		// init variable
 		CL_Pokemon ans = null;
+		//CL_Pokemon ans1 = null;
+		if(!Ex2.ffs.isEmpty()) {
+		 ans = Ex2.ffs.get(0);
+		// ans1 =  Ex2.ffs.get(0);
+		}
 		double path_min= Double.POSITIVE_INFINITY;
+		//double path_min2= Double.POSITIVE_INFINITY;
 		double dest=-1;
 
+		
 
-		double max_value=-1;
+	
 		// for to pokemon and check min path 
 		for(CL_Pokemon pokemon: Ex2.ffs) {
 			boolean chased = false;
@@ -252,13 +248,20 @@ public class Ex2 implements Runnable{
 				edge_data edge = graph.getEdge(pokemon.get_edge().getSrc(),pokemon.get_edge().getDest()); 
 
 				dest= algo.shortestPathDist(src,pokemon.get_edge().getSrc());
-
+				
 				if(dest<path_min )	{ 
+			//		path_min2 = path_min;
 					path_min=dest;	
 					ans = pokemon;
 				}
+//				else if(dest<path_min2  ){
+//					path_min2 = dest;
+//					ans1 = pokemon;
+//				}
 			}
 		}
+		
+	//	if (ans.getValue() < ans1.getValue() && path_min-path_min2==3) return ans1;
 		return ans;
 	}
 	/**

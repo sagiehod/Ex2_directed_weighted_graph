@@ -15,6 +15,6 @@
 	<classpathentry kind="lib" path="libs/okio-2.7.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="libs/java-json.jar"/>
-	<classpathentry kind="lib" path="C:/Users/שגיא/eclipse-workspace/Ex2_directed_weighted_graph/libs/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -39,13 +39,16 @@ public class Game_Panel extends JPanel {
 		this.setOpaque(false);
 		this.setBackground(Color.WHITE);
 		this.agent=new ImageIcon("./data/images.PNG ").getImage();
-		this.charmander=Toolkit.getDefaultToolkit().createImage("./data/charmander.gif");
-		this.charmeleon=Toolkit.getDefaultToolkit().createImage("./data/charmeleon.gif");
+     	this.charmander=new ImageIcon("./data/charmander.PNG ").getImage();
+     	this.charmeleon=new ImageIcon("./data/charmeleon.PNG ").getImage();
+     	this.charizard=new ImageIcon("./data/charizard.PNG ").getImage();
+		//this.charmander=Toolkit.getDefaultToolkit().createImage("./data/charmander.gif");
+		//this.charmeleon=Toolkit.getDefaultToolkit().createImage("./data/charmeleon.gif");
 		this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
-		this.setBackground(Color.white);
-		this.charizard = Toolkit.getDefaultToolkit().createImage("./data/charizard.gif");
-		this.Misty = Toolkit.getDefaultToolkit().createImage("./data/Misty.gif");
-		this.Brock = new ImageIcon("./data/Brock.png").getImage();;
+	    this.setBackground(Color.white);
+		//this.charizard = Toolkit.getDefaultToolkit().createImage("./data/charizard.gif");
+		//this.Misty = Toolkit.getDefaultToolkit().createImage("./data/Misty.gif");
+		//this.Brock = new ImageIcon("./data/Brock.png").getImage();;
 
 
 	}
@@ -93,8 +96,8 @@ public class Game_Panel extends JPanel {
 		g.clearRect(0, 0, w, h);
 		g.drawImage(this.backgraound,0, 0, w, h, null);
 		//	updateFrame();
-		drawPokemons(g);
 		drawGraph(g);
+		drawPokemons(g);
 		drawAgants(g);
 		drawInfo(g);
 
@@ -141,11 +144,6 @@ public class Game_Panel extends JPanel {
      * @param g The Graphics 
      */
 	private void drawPokemons(Graphics g) {
-		//					Image image = createImage(5000,5000);
-		//					Graphics g1 = image.getGraphics();
-		//					g.drawImage(map.myImage,-8 ,-8, getWidth(), getHeight(), this);
-		//					Iterator<CL_Pokemon> ItP = game.CL_Pokemon.iterator();
-
 		List<CL_Pokemon> fs = _ar.getPokemons();
 		if(fs!=null) {
 			Iterator<CL_Pokemon> itr = fs.iterator();
@@ -173,7 +171,7 @@ public class Game_Panel extends JPanel {
 						}
 
 						else {
-							g.drawImage(charmander,(int)fp.x()-r, (int)fp.y()-r, 4*r, 4*r,null);
+							g.drawImage(charmander,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
 
 						}
 						g.setColor(Color.red);
@@ -200,33 +198,14 @@ public class Game_Panel extends JPanel {
 			String s="agent "+rs.get(i).getID()+" :	 "+rs.get(i).getValue();
 			i++;
 			if(c!=null) {
-               if(i==1) {
 				geo_location fp = this._w2f.world2frame(c);
 				//g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
 				g.drawImage(agent,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
 
 				g.drawString(s,(int)fp.x()-r, (int)(fp.y()-4*r));
-				g.drawString(rs.get(i-1).getSpeed()+ " ", 800,100+i*30);
-				g.drawString((long)(rs.get(i-1).getLocation().x()*10000000000l)+ " "+ (long)(rs.get(i-1).getLocation().y()*10000000000l)+ " ",850, 100+i*30);
-               }
-               if(i==2) {
-   				geo_location fp = this._w2f.world2frame(c);
-   				//g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
-   				g.drawImage(Misty,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
-
-   				g.drawString(s,(int)fp.x()-r, (int)(fp.y()-4*r));
-   				g.drawString(rs.get(i-1).getSpeed()+ " ", 800,100+i*30);
-   				g.drawString((long)(rs.get(i-1).getLocation().x()*10000000000l)+ " "+ (long)(rs.get(i-1).getLocation().y()*10000000000l)+ " ",850, 100+i*30);
-                  }
-               if(i==3) {
-      				geo_location fp = this._w2f.world2frame(c);
-      				//g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
-      				g.drawImage(Brock,(int)fp.x()-r, (int)fp.y()-r, 4*r, 4*r,null);
-
-      				g.drawString(s,(int)fp.x()-r, (int)(fp.y()-4*r));
-      				g.drawString(rs.get(i-1).getSpeed()+ " ", 800,100+i*30);
-      				g.drawString((long)(rs.get(i-1).getLocation().x()*10000000000l)+ " "+ (long)(rs.get(i-1).getLocation().y()*10000000000l)+ " ",850, 100+i*30);
-                     }
+			
+               
+        
               
 			}
 		}
@@ -259,11 +238,7 @@ public class Game_Panel extends JPanel {
 		//	g.drawString(""+n.getKey(), fp.ix(), fp.iy()-4*r);
 	}
 
-	//	private void drawTimer(Graphics g) {
-	//		g.setColor(Color.BLACK);
-	//		g.setFont(new Font("Arial",Font.BOLD,12));
-	//		g.drawString("Time: "+_ar.getGame().timeToEnd()/1000,40 , 60);
-	//	}
+	
 	   /**
      * draws the score in ths panal 
      * @param g - This Graphics2D 
@@ -274,9 +249,11 @@ public class Game_Panel extends JPanel {
 		g.setFont(new Font("Arial",Font.BOLD,12));
 		int y=60;
 		int i=0;
+		if(rs!=null) {
 		for (CL_Agent a : rs){
 			g.drawString("agent "+ a.getID()+" :	 "+a.getValue(),900 , y+i);
 			i+=20;
+		}
 		}
 	}
 
