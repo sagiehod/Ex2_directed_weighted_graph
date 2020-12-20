@@ -133,9 +133,10 @@ Extension to some of the departments:
 This class has several algorithms used during the game such as: positioning and moving the automatic agent, creating the elements and more.
 In this department we implemented the methods:
 - run: that runs the game, gets the graph, the Pokemon, the agents, and calls the other functions that the game will run and runs like: move agent, music, time left, points and more.
-- move agent-: 
+- move agent: 
 In this method we created the displacement of the agents and their arrival in the Pokemon by calculations and using the shortestpath function so that each agent catches as many Pokemon as possible in the allotted time and reaches as many points as he can.
-agentsFirstPlace-: We created an agent placement function the first time it calculates all the possible options that agents have and their score from each choice of place, and it implements the getVchooseK function
+- agentsFirstPlace :
+We created an agent placement function the first time it calculates all the possible options that agents have and their score from each choice of place, and it implements the getVchooseK function
 
 ## In the Game_Panel class:   
  Displays the game in JAVA, we implemented methods of: graph display, Pokemon images and their display and agents as an image along with their score, graph background creation, game time remaining, points, and what stage of the game is at.
