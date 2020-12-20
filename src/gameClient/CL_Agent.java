@@ -23,7 +23,12 @@ public class CL_Agent {
 		
 		private double _value;
 		
-		
+
+	    /**
+	     * a constructor.
+	     * @param g   -  a directed_weighted_graph type.
+	     * @param start_node the first spot the agent to start with him.
+	     */
 		public CL_Agent(directed_weighted_graph g, int start_node) {
 			_gg = g;
 			setMoney(0);
@@ -32,6 +37,11 @@ public class CL_Agent {
 			_id = -1;
 			setSpeed(0);
 		}
+	    /**
+	     * updates the agent in every run-step.
+	     *
+	     * @param json a given JSON string from the server.
+	     */
 		public void update(String json) {
 			JSONObject line;
 			try {
@@ -58,6 +68,10 @@ public class CL_Agent {
 				e.printStackTrace();
 			}
 		}
+	    /**
+	     * get the status of the key  of agent 
+	     *
+	     */
 		//@Override
 		public int getSrcNode() {return this._curr_node.getKey();}
 		public String toJSON() {
@@ -73,8 +87,13 @@ public class CL_Agent {
 					+ "}";
 			return ans;	
 		}
+		
 		private void setMoney(double v) {_value = v;}
-	
+		 /**
+	     * a next node 
+	     *
+	     * @param dest
+	     */
 		public boolean setNextNode(int dest) {
 			boolean ans = false;
 			int src = this._curr_node.getKey();
@@ -85,6 +104,11 @@ public class CL_Agent {
 			else {_curr_edge = null;}
 			return ans;
 		}
+	    /**
+	     * The Node the agent is currently standing on
+	     *
+	     * @param src 
+	     */
 		public void setCurrNode(int src) {
 			this._curr_node = _gg.getNode(src);
 		}
@@ -125,11 +149,18 @@ public class CL_Agent {
 			}
 			return ans;
 		}
-
+		  /**
+	     * @return the speed of agent
+	     *
+	     */
 		public double getSpeed() {
 			return this._speed;
 		}
-
+		  /**
+	     * set speed from server 
+	     *
+	     * @param v
+	     */
 		public void setSpeed(double v) {
 			this._speed = v;
 		}

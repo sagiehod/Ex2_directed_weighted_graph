@@ -12,7 +12,14 @@ public class CL_Pokemon {
 	private int min_ro;
 	 private String img;
 	 
-	 
+	 /**
+	     *  constructor.
+	     *
+	     * @param p - a Point3D type.
+	     * @param t -  going up or down
+	     * @param v - value of this Pokemons
+	     * @param e - the edge the Pokemons is on
+	     */
 	public CL_Pokemon(Point3D p, int t, double v, double s, edge_data e) {
 		_type = t;
 	//	_speed = s;
@@ -22,6 +29,7 @@ public class CL_Pokemon {
 		min_dist = -1;
 		min_ro = -1;
 	}
+	
 	public CL_Pokemon(String s) {
 		 try {
 	            JSONObject Fruits = new JSONObject(s);
@@ -59,16 +67,30 @@ public class CL_Pokemon {
 	public edge_data get_edge() {
 		return _edge;
 	}
-
+	 /**
+     *set of the edge
+     * @param edges - an edge_data type.
+     */
 	public void set_edge(edge_data _edge) {
 		this._edge = _edge;
 	}
 
+    /**
+     * @return the location of this pokemon
+     */
 	public Point3D getLocation() {
 		return _pos;
 	}
+
+    /**
+     * @return if the Pokemon is doing down or up
+     */
 	public int getType() {return _type;}
 //	public double getSpeed() {return _speed;}
+
+    /**
+     * @return  the value of this Pokemon.
+     */
 	public double getValue() {return _value;}
 
 	public double getMin_dist() {

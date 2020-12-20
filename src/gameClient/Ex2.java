@@ -47,7 +47,7 @@ public class Ex2 implements Runnable{
 		if(a.length==0) {
 		login_gui  l = new login_gui();
 		l.chose();
-		music player = new music("Pokemon.mp3");
+		music player = new music("./data/Pokemon.mp3");
 		Thread playerThread = new Thread(player);
 		playerThread.start();
 		while(l.flag != true) {
@@ -84,7 +84,7 @@ public class Ex2 implements Runnable{
 		int ind = 0;
 		long dt=100;
 
-		music player = new music("Pokémon music.mp3");
+		music player = new music("./data/Pokémon music.mp3");
 		Thread playerThread = new Thread(player);
 		playerThread.start();
 
@@ -113,6 +113,8 @@ public class Ex2 implements Runnable{
 //	    	  _win.dispose();
 //	      });
 
+		
+		
 		System.out.println(game.toString());
 		System.exit(0);
 	}

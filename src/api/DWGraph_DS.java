@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 
@@ -26,7 +27,7 @@ public class DWGraph_DS  implements directed_weighted_graph {
 	}
 	/**
 	 * A copy constructor of this DWGraph_DS 
-	 * @param gh
+	 * @param gh.
 	 */
 	public DWGraph_DS (directed_weighted_graph gh) {
 		this.MC=gh.getMC();
@@ -72,25 +73,30 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}	
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this ==obj) return true;
+//		if (obj == null || getClass() != obj.getClass()) return false;
+//
+//		directed_weighted_graph dwg = (directed_weighted_graph) obj;
+//
+//		return edgeSize == dwg.edgeSize();
+//	}
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + MC;
-		result = prime * result + edgeSize;
-		result = prime * result + ((edges_TheGragh_WD == null) ? 0 : edges_TheGragh_WD.hashCode());
-		result = prime * result + ((nodes_TheGragh_WD == null) ? 0 : nodes_TheGragh_WD.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this ==obj) return true;
-		if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        DWGraph_DS that = (DWGraph_DS) obj;
+        return edgeSize == that.edgeSize &&
+        		nodes_TheGragh_WD.equals(that.nodes_TheGragh_WD);
+    }
 
-		directed_weighted_graph dwg = (directed_weighted_graph) obj;
+    @Override
+    public int hashCode() {
+        return Objects.hash(nodes_TheGragh_WD, edgeSize);
+    }
 
-		return edgeSize == dwg.edgeSize();
-	}
 	/**
 	 * add a new node to the graph with the given node_data.
 	 * @param n

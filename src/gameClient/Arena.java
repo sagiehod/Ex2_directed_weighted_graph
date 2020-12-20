@@ -30,6 +30,9 @@ public class Arena {
 	private static Point3D MIN = new Point3D(0, 100,0);
 	private static Point3D MAX = new Point3D(0, 100,0);
 
+    /**
+     * an empty constructor.
+     */
 	public Arena() {;
 		_info = new ArrayList<String>();
 	}
@@ -38,12 +41,30 @@ public class Arena {
 		this.setAgents(r);
 		this.setPokemons(p);
 	}
+	/**
+     * Set the list representing the Pokemon's in the games Arena
+     *
+     * @param f
+     */
+
 	public void setPokemons(List<CL_Pokemon> f) {
 		this._pokemons = f;
 	}
+	 /**
+     * Set the list representing the Agent's in the games Arena
+     *
+     * @param f
+     */
+
 	public void setAgents(List<CL_Agent> f) {
 		this._agents = f;
 	}
+
+    /**
+     * Set the graph of this game's arena
+     *
+     * @param g
+     */
 	public void setGraph(directed_weighted_graph g) {this._gg =g;}//init();}
 	private void init( ) {
 		MIN=null; MAX=null;
@@ -65,17 +86,34 @@ public class Arena {
 	public List<CL_Agent> getAgents() {return _agents;}
 	public List<CL_Pokemon> getPokemons() {return _pokemons;}
 
-	
+	/**
+     * @return the graph of this game's arena
+     */
+
 	public directed_weighted_graph getGraph() {
 		return _gg;
 	}
+    /**
+     * get the list of Strings containing information about the game.
+     */
 	public List<String> get_info() {
 		return _info;
 	}
+
+    /**
+     * set the list of Strings containing information about the game.
+     * @param _info
+     */
+
 	public void set_info(List<String> _info) {
 		this._info = _info;
 	}
-
+	  /**
+     * Convert Json String of a Agents to list of Agent
+     * @param aa Json String representing array of agents
+     * @param gg directed weighted graph
+     * @return List Agents
+     */
 	////////////////////////////////////////////////////
 	public static List<CL_Agent> getAgents(String aa, directed_weighted_graph gg) {
 		ArrayList<CL_Agent> ans = new ArrayList<CL_Agent>();
@@ -93,6 +131,11 @@ public class Arena {
 		}
 		return ans;
 	}
+    /**
+     * Convert Json String of a Pokemons to list of CL_Pokemon
+     * @param fs Json String representing array of pokemons
+     * @return list  pokemons
+     */
 	public static ArrayList<CL_Pokemon> json2Pokemons(String fs) {
 		ArrayList<CL_Pokemon> ans = new  ArrayList<CL_Pokemon>();
 		try {
@@ -113,6 +156,11 @@ public class Arena {
 		catch (JSONException e) {e.printStackTrace();}
 		return ans;
 	}
+	 /**
+     * Update for pokemon on which edge it is on.
+     * @param fr
+     * @param g
+     */
 	public static void updateEdge(CL_Pokemon fr, directed_weighted_graph g) {
 		//	oop_edge_data ans = null;
 		Iterator<node_data> itr = g.getV().iterator();
@@ -126,7 +174,14 @@ public class Arena {
 			}
 		}
 	}
-
+	   /**
+     * This method checks whether pokemon object is on the edge
+     *
+     *  * @param p location to check if on the edge between src and dest
+     * @param src 
+     * @param dest 
+     * @return true if p is on the edge between src and dest, false if not
+     */
 	private static boolean isOnEdge(geo_location p, geo_location src, geo_location dest ) {
 
 		boolean ans = false;
@@ -135,11 +190,26 @@ public class Arena {
 		if(dist>d1-EPS2) {ans = true;}
 		return ans;
 	}
+	/**
+     * Check if p location is on the edge between s and d
+     * @param p location of a point
+     * @param s key of src node
+     * @param d key of dest node
+     * @param g directed weighted graph
+     * @return isOnEdge
+     */
 	private static boolean isOnEdge(geo_location p, int s, int d, directed_weighted_graph g) {
 		geo_location src = g.getNode(s).getLocation();
 		geo_location dest = g.getNode(d).getLocation();
 		return isOnEdge(p,src,dest);
 	}
+	   /**
+     * Check if p location is on the edge between src and dest
+     * @param p location to check if on the edge between src and dest
+     * @param src location of src node
+     * @param dest location of dest node
+     * @return true if p is on the edge between src and dest, false if not
+     **/
 	private static boolean isOnEdge(geo_location p, edge_data e, int type, directed_weighted_graph g) {
 		int src = g.getNode(e.getSrc()).getKey();
 		int dest = g.getNode(e.getDest()).getKey();
@@ -147,6 +217,11 @@ public class Arena {
 		if(type>0 && src>dest) {return false;}
 		return isOnEdge(p,src, dest, g);
 	}
+	/**
+    *
+    * @param g directed weighted graph g
+    * @return Range2D
+    */
 
 	private static Range2D GraphRange(directed_weighted_graph g) {
 		Iterator<node_data> itr = g.getV().iterator();
@@ -170,6 +245,13 @@ public class Arena {
 		Range yr = new Range(y0,y1);
 		return new Range2D(xr,yr);
 	}
+	  /**
+     * convert graph to frame
+     * @param g directed weighted graph
+     * @param frame
+     * @return ans
+     */
+
 	public static Range2Range w2f(directed_weighted_graph g, Range2D frame) {
 		Range2D world = GraphRange(g);
 		Range2Range ans = new Range2Range(world, frame);

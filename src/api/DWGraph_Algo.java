@@ -81,7 +81,6 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 				tarjan(i);
 			}
 		}
-		System.out.println(sccCount);
 		if(sccCount==1) return true;
 		return false;
 	}

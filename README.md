@@ -21,8 +21,7 @@ The algorithm finds the nearest Pokemon with the highest value and moves there -
 In this project we received data from a server (jar file) on which the game is performed.
 Obtaining the information was based on strings represented as JSON.
 
-## The Game :
-[![Watch the video](https://github.com/sagiehod/Ex2_directed_weighted_graph/blob/main/data/ezgif.com-gif-maker%20(1).gif)]
+************* סרטון של המשחק *****************
 
 
 
