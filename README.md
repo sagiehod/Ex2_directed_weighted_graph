@@ -106,7 +106,7 @@ We have 8 departments:
 |  CL_Agent          | Receives from the server a collection of agents with all their data and converts them using json                 |                        
 | CL_Pokemon        | Brings all the Pokemon with all their features, position, value, getLocation and more |                
 |  Ex2      | This is the main class, where we implemented functions and algorithms for the course of the game, positioning the agents for the first time and moving them on the graph, choosing the path of the agents to the Pokemon.  |                                      
-|  Game_Frame         |  |
+|  Game_Frame   | In this class we used for the graph display, we created the display window, the time left for the game and the game stage. We used this class because in a framework there are options and things that are not in a panel and vice versa |
 |  Game_Panel       |  This class is the game view - in which we implemented functions of the graph display, the game background, the agent Pokemon, the points and the time left.  |                                  
 | login_gui  | In this class we created the user login by id and select the game stage
 |  music       |  In this class we created background music at the entrance to the game and then the music changes during the game.   |
