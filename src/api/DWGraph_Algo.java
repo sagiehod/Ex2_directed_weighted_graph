@@ -86,11 +86,11 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	}
 
 	/**
-	 * The tarjan algorithm takes a directed graph as input,
-	 *  and produces a partition of the graph's vertices into the graph's strongly connected components.
-	 *  Each vertex of the graph appears in exactly one of the strongly connected components.
-	
-	Any vertex that is not on a directed cycle forms a strongly connected component all by itself
+	 *Tarjan's strongly connected components algorithm is an algorithm in graph theory for finding the strongly connected components (SCCs) of a directed graph. 
+	 *It runs in linear time, matching the time bound for alternative methods including Kosaraju's algorithm and the path-based strong component algorithm.
+	 *The algorithm is named for its invento
+	 *Any vertex that is not on a directed cycle forms a strongly connected component all by itself
+	 * @param at from the node data
 	 */
 	private void tarjan(node_data at) {
 
@@ -120,7 +120,6 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 				if(node==at) break;
 			}
 			sccCount++;
-			//[num comp][path]
 		}
 
 	}
@@ -174,7 +173,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 			ans.add(WGraph.getNode(src));
 			return ans;
 		}
-// a container for the nodes that in the shortest path
+		// a container for the nodes that in the shortest path
 		Map<node_data,node_data> parentNodes = this.dijkstra(src, dest);
 		node_data node = this.WGraph.getNode(dest);
 

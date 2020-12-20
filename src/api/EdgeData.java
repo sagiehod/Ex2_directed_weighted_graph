@@ -6,6 +6,41 @@ package api;
  */
 
 public class EdgeData implements edge_data {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + dest;
+		result = prime * result + ((info == null) ? 0 : info.hashCode());
+		result = prime * result + src;
+		result = prime * result + tag;
+		long temp;
+		temp = Double.doubleToLongBits(weight);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof EdgeData))
+			return false;
+		EdgeData other = (EdgeData) obj;
+		if (dest != other.dest)
+			return false;
+		if (info == null) {
+			if (other.info != null)
+				return false;
+		} else if (!info.equals(other.info))
+			return false;
+		if (src != other.src)
+			return false;
+		if (tag != other.tag)
+			return false;
+		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+			return false;
+		return true;
+	}
 	private int src;
 	private int dest;
 	private double weight;

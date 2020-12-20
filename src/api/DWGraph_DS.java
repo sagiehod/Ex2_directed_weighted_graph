@@ -30,9 +30,9 @@ public class DWGraph_DS  implements directed_weighted_graph {
 	 * @param gh.
 	 */
 	public DWGraph_DS (directed_weighted_graph gh) {
-		this.MC=gh.getMC();
-		this.edgeSize=gh.edgeSize();
 
+		this.nodes_TheGragh_WD = new HashMap<>();
+		this.edges_TheGragh_WD = new HashMap<>();
         for(node_data v :gh.getV()){ 
             this.addNode(v);
          }
@@ -74,29 +74,41 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		return null;
 	}	
 	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this ==obj) return true;
-//		if (obj == null || getClass() != obj.getClass()) return false;
-//
-//		directed_weighted_graph dwg = (directed_weighted_graph) obj;
-//
-//		return edgeSize == dwg.edgeSize();
-//	}
+
+
 	@Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        DWGraph_DS that = (DWGraph_DS) obj;
-        return edgeSize == that.edgeSize &&
-        		nodes_TheGragh_WD.equals(that.nodes_TheGragh_WD);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nodes_TheGragh_WD, edgeSize);
-    }
-
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + MC;
+		result = prime * result + edgeSize;
+		result = prime * result + ((edges_TheGragh_WD == null) ? 0 : edges_TheGragh_WD.hashCode());
+		result = prime * result + ((nodes_TheGragh_WD == null) ? 0 : nodes_TheGragh_WD.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof DWGraph_DS))
+			return false;
+		DWGraph_DS other = (DWGraph_DS) obj;
+		if (MC != other.MC)
+			return false;
+		if (edgeSize != other.edgeSize)
+			return false;
+		if (edges_TheGragh_WD == null) {
+			if (other.edges_TheGragh_WD != null)
+				return false;
+		} else if (!edges_TheGragh_WD.equals(other.edges_TheGragh_WD))
+			return false;
+		if (nodes_TheGragh_WD == null) {
+			if (other.nodes_TheGragh_WD != null)
+				return false;
+		} else if (!nodes_TheGragh_WD.equals(other.nodes_TheGragh_WD))
+			return false;
+		return true;
+	}
 	/**
 	 * add a new node to the graph with the given node_data.
 	 * @param n

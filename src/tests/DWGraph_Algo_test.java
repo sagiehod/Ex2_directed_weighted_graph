@@ -33,18 +33,13 @@ class DWGraph_Algo_test {
 			        directed_weighted_graph g1 = new DWGraph_DS();
 			        ga.init(g);
 			        g1 = ga.copy();
-
+			        assertEquals(g,g1);
 			        assertEquals(g.edgeSize(), g1.edgeSize());
 			        assertEquals(g.nodeSize(), g1.nodeSize());
 			        assertEquals(g.getEdge(1, 2), g1.getEdge(1, 2));
 			        g.removeNode(0);
 			        assertNotEquals(g.nodeSize(), g1.nodeSize());
-
-
 			    }
-	
-	
-	
 	
 
 	@Test

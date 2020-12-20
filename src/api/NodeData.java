@@ -5,6 +5,25 @@ import gameClient.util.Point3D;
 		private int key;
 		private static int idCounter = 0;
 		private geo_location GLocation;	
+	
+		private double weight;
+		private String info;
+		private int tag;	
+		/**
+		 * constructor of NodeInfo
+		 * @param i 
+		 */
+		/**
+		 *   a empty constructor of this NodeData
+		 *
+		 */
+		public NodeData()  {
+			key=idCounter++;
+			this.GLocation = new Point3D(0,0,0);
+			info="";
+			tag=0;
+			weight=Double.POSITIVE_INFINITY;
+		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -22,9 +41,7 @@ import gameClient.util.Point3D;
 		public boolean equals(Object obj) {
 			if (this == obj)
 				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
+			if (!(obj instanceof NodeData))
 				return false;
 			NodeData other = (NodeData) obj;
 			if (GLocation == null) {
@@ -44,24 +61,6 @@ import gameClient.util.Point3D;
 			if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
 				return false;
 			return true;
-		}
-		private double weight;
-		private String info;
-		private int tag;	
-		/**
-		 * constructor of NodeInfo
-		 * @param i 
-		 */
-		/**
-		 *   a empty constructor of this NodeData
-		 *
-		 */
-		public NodeData()  {
-			key=idCounter++;
-			this.GLocation = new Point3D(0,0,0);
-			info="";
-			tag=0;
-			weight=Double.POSITIVE_INFINITY;
 		}
 		/**
 		 *  constructor of this NodeData
