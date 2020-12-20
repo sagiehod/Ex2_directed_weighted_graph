@@ -16,7 +16,7 @@ Agents are represented by images of Pokemon Fire.
 There are 0-23 stages, each with a different amount of Pokemon and agents,
 Each time an agent catches the Pokemon, the agent's speed increases so he can get to the next Pokemon faster by crossing the ribs between the nodes.
 And accumulate more points.
-• Automatic management - our algorithm decides on the agents' locations and transfers them to Pokemon in order to get as many points as possible. 
+• Automatic management - our algorithm decides on the agents locations and transfers them to Pokemon in order to get as many points as possible. 
 The algorithm finds the nearest Pokemon with the highest value and moves there - according to dijkstra's algorithm.
 In this project we received data from a server (jar file) on which the game is performed.
 Obtaining the information was based on strings represented as JSON.
@@ -68,7 +68,8 @@ Nodes are placed on a pile in the order of their visit.
 
 ### Using the dijkstra algorithm:
 It gets 2 nodes- src and dest should go from the src node to the destination node and go through the nodes with the lowest weight.
- The algorithm works as follows: First we will initialize all the weights of the nodes to infinity so that we know which node we have not yet updated, 
+- The algorithm works as follows: 
+First we will initialize all the weights of the nodes to infinity so that we know which node we have not yet updated, 
  and then we set a priority queue that will contain the nodes we will visit and update their weights.
 In addition, we created the parentNodes shamp that will eventually contain the updated nodes through which we passed the shortest trajectory in the graph from the vertex src and dest.
 We enter the first node and initialize its weight to 0, and all the other nodes in the graph are initialized to infinity. 
