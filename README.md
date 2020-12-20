@@ -60,18 +60,28 @@ Finally, the goal is to create a weighted and directed graph consisting of nodes
 2) Dijkstra - to find the shortest route in the graph, and to return the list of sides in the shortest route in the graph. In methods: shortestpathDist, shortestpath
 
 ### Using the tarjan algorithm:
-Nodes are placed on a pile in the order of their visit.
- When the first depth search recursively visits the v node and its descendants, not all of these nodes are necessarily sucked out of the pile when this recursive call returns.
- The essential unchanging characteristic is that a node remains in a stack after its visit if and only if there is a path in the input graph from it to some node earlier in the stack.
- In other words, it means that in DFS a node is only removed from the stack after all its connected paths have been crossed. 
- When the DFS goes back it will remove the nodes in a single path and return to the root to start a new path.
-
+- First depth search (DFS) starts from a node that receives from the isConnected function
+(passes over nodedata) the nodes are located on a stack in the order of their visit.
+When the first depth search recursively visits the at node and its descendants, 
+those nodes do not necessarily suck out of the pile when this recursive call returns.
+The essential unchanging characteristic is that a node remains in a stack after its visit if and only if there is a path
+in the input graph from it to any node earlier in the stack. 
+In other words, in DFS a junction is removed from the stack only after crossing all of its connected paths.
+When the DFS goes back it will remove the nodes in a single path and return to the root to start a new path.
+- At the end of the conversation that criticizes at and his descendants, 
+we know if at itself has a path to each node earlier in the stack. 
+If so, the call repeats, leaving the at in the stack to keep the variable. If not, then at must be the root of its strongly connected component,
+consisting of at along with later nodes in a stack of at (such nodes have paths back to at, but not to any previous node, 
+because if they had paths to previous nodes So at will also have paths to previous nodes and that's a lie).
+The connected component rooted in at node from the stack and is returned, retaining the variable again
+	
 ### Using the dijkstra algorithm:
 It gets 2 nodes- src and dest should go from the src node to the destination node and go through the nodes with the lowest weight.
 - The algorithm works as follows: 
 First we will initialize all the weights of the nodes to infinity so that we know which node we have not yet updated, 
  and then we set a priority queue that will contain the nodes we will visit and update their weights.
-In addition, we created the parentNodes shamp that will eventually contain the updated nodes through which we passed the shortest trajectory in the graph from the vertex src and dest.
+In addition, we created the parentNodes shamp that will eventually contain the updated nodes through which we passed the shortest trajectory in the graph,
+from the vertex src and dest.
 We enter the first node and initialize its weight to 0, and all the other nodes in the graph are initialized to infinity. 
 The current junction will include all of its neighbors and will update its temporary weights.
 The weight of each node is updated according to the parent weight of that node plus the temporary distance between them which is the weight at the end.
