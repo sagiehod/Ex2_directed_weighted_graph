@@ -42,13 +42,9 @@ public class Game_Panel extends JPanel {
      	this.charmander=new ImageIcon("./data/charmander.PNG ").getImage();
      	this.charmeleon=new ImageIcon("./data/charmeleon.PNG ").getImage();
      	this.charizard=new ImageIcon("./data/charizard.PNG ").getImage();
-		//this.charmander=Toolkit.getDefaultToolkit().createImage("./data/charmander.gif");
-		//this.charmeleon=Toolkit.getDefaultToolkit().createImage("./data/charmeleon.gif");
 		this.backgraound = new ImageIcon("data\\beckGround.jpeg").getImage();
 	    this.setBackground(Color.white);
-		//this.charizard = Toolkit.getDefaultToolkit().createImage("./data/charizard.gif");
-		//this.Misty = Toolkit.getDefaultToolkit().createImage("./data/Misty.gif");
-		//this.Brock = new ImageIcon("./data/Brock.png").getImage();;
+	
 
 
 	}
@@ -103,10 +99,10 @@ public class Game_Panel extends JPanel {
 
 		//drawTimer(g);
 		drawScore(g);
-		g.setColor(Color.RED);
-		g.setFont(new Font("Arial",Font.BOLD,18));
-		String s="Time: "+Game_Frame.timeToEnd + "     num senrio "+ Game_Frame.senrio;
-		g.drawString(s, 50, 100);
+		g.setColor(Color.blue);
+		g.setFont(new Font("Arial Black",Font.BOLD,26));
+		String s="Time: "+Game_Frame.timeToEnd + "           num senrio "+ Game_Frame.senrio;
+		g.drawString(s, 190, 70);
 
 
 	}
@@ -160,18 +156,18 @@ public class Game_Panel extends JPanel {
 					//fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
 					//	g.drawString(""+n.getKey(), fp.ix(), fp.iy()-4*r);
 					if( f.getValue()>12) {
-						g.drawImage(charizard,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
+						g.drawImage(charizard,(int)fp.x()-r, (int)fp.y()-r, 6*r, 6*r,null);
 					}
 					else {
 
 
 
 						if	(f.getValue()>7) {
-							g.drawImage(charmeleon,(int)fp.x()-r, (int)fp.y()-r, 4*r, 4*r,null);
+							g.drawImage(charmeleon,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
 						}
 
 						else {
-							g.drawImage(charmander,(int)fp.x()-r, (int)fp.y()-r, 3*r, 3*r,null);
+							g.drawImage(charmander,(int)fp.x()-r, (int)fp.y()-r, 4*r, 4*r,null);
 
 						}
 						g.setColor(Color.red);
@@ -190,7 +186,8 @@ public class Game_Panel extends JPanel {
 	private void drawAgants(Graphics g) {
 		List<CL_Agent> rs = _ar.getAgents();
 		//	Iterator<OOP_Point3D> itr = rs.iterator();
-		g.setColor(Color.red);
+		g.setColor(Color.black);
+		g.setFont(new Font("Arial",Font.BOLD,14));
 		int i=0;
 		while(rs!=null && i<rs.size()) {
 			geo_location c = rs.get(i).getLocation();
@@ -200,7 +197,7 @@ public class Game_Panel extends JPanel {
 			if(c!=null) {
 				geo_location fp = this._w2f.world2frame(c);
 				//g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
-				g.drawImage(agent,(int)fp.x()-r, (int)fp.y()-r, 5*r, 5*r,null);
+				g.drawImage(agent,(int)fp.x()-r, (int)fp.y()-r, 7*r, 7*r,null);
 
 				g.drawString(s,(int)fp.x()-r, (int)(fp.y()-4*r));
 			
@@ -246,12 +243,12 @@ public class Game_Panel extends JPanel {
 	private void drawScore (Graphics g){
 		List<CL_Agent> rs = _ar.getAgents();
 		g.setColor(Color.RED);
-		g.setFont(new Font("Arial",Font.BOLD,12));
+		g.setFont(new Font("Comic Sans MS",Font.BOLD,12));
 		int y=60;
 		int i=0;
 		if(rs!=null) {
 		for (CL_Agent a : rs){
-			g.drawString("agent "+ a.getID()+" :	 "+a.getValue(),900 , y+i);
+			g.drawString("agent "+ a.getID()+" :   "+a.getValue(),900 , y+i);
 			i+=20;
 		}
 		}

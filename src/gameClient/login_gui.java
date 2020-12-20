@@ -99,9 +99,7 @@ public class login_gui implements ActionListener {
 		}
 	
 
-public static void main(String[] args) {
 
-}
 }
 
 
