@@ -17,6 +17,8 @@ import java.util.PriorityQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.JButton;
+
 public class Ex2 implements Runnable{
 
 	private static Game_Frame _win;
@@ -42,42 +44,28 @@ public class Ex2 implements Runnable{
 
 
 	public static void main(String[] a) {
-login_gui  l = new login_gui();
+		if(a.length==0) {
+		login_gui  l = new login_gui();
 		l.chose();
 		music player = new music("Pokemon.mp3");
 		Thread playerThread = new Thread(player);
 		playerThread.start();
 		while(l.flag != true) {
 			System.out.println("");
-			
 		}
-		
+		l.exit();
 		playerThread.stop();
-		
 		Ex2 start=new Ex2(l.id,l.senrio);
-
 		Thread client = new Thread(start);
 		client.start();
+		}else if(a.length==2) {
+			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
+			Thread client = new Thread(start);
+			client.start();	
+		}
 	}
 		
-		
-		//music player = new music("Pokemon.mp3");
-		//Thread playerThread = new Thread(player);
-		
-//		if(a.length==0) {
-//			login_gui  l = new login_gui();
-//			l.chose();
-//	
-//			
-//		}else 
-//		{
-//			
-//			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
-//			Thread client = new Thread(start);
-//			client.start();	
-//					
-//				}
-//	}
+
 	/**
 	 * run the game
 	 * init the game(graph)
@@ -92,7 +80,8 @@ login_gui  l = new login_gui();
 		init(game);
 		game.startGame();
 		_win.setTitle("Ex2 - OOP: (NONE trivial Solution) "+game.toString());
-		int ind=0;
+		//int ind=(int) (game.timeToEnd()/100);
+		int ind = 0;
 		long dt=100;
 
 		music player = new music("Pokémon music.mp3");
@@ -115,6 +104,14 @@ login_gui  l = new login_gui();
 				e.printStackTrace();
 			}
 		}
+
+//	      JButton button = new JButton("Click to Close!");
+//	      _win.setDefaultCloseOperation(_win.EXIT_ON_CLOSE);
+//	      _win.setContentPane(button);
+//	      button.addActionListener(e -> {
+//	    	  game.stopGame();
+//	    	  _win.dispose();
+//	      });
 
 		System.out.println(game.toString());
 		System.exit(0);

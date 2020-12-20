@@ -32,19 +32,20 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		this.MC=gh.getMC();
 		this.edgeSize=gh.edgeSize();
 
-		Iterator<node_data> it = gh.getV().iterator();
-		while(it.hasNext()) {
-			node_data s=it.next();
-			this.nodes_TheGragh_WD.put(s.getKey(),s);
-
-			Iterator<edge_data> it1 = gh.getE(s.getKey()).iterator();
-			while(it1.hasNext()) {
-				edge_data e=it1.next();
-				this.edges_TheGragh_WD.put(s.getKey(),new HashMap<>());
-				this.edges_TheGragh_WD.get(s.getKey()).put(e.getDest(), e);
-			}
-		}
+        for(node_data v :gh.getV()){ 
+            this.addNode(v);
+         }
+         for(node_data v :gh.getV())
+         {
+             for(edge_data e :gh.getE(v.getKey()))
+             {
+                 this.edges_TheGragh_WD.put(v.getKey(), new HashMap<Integer,edge_data>()); 
+                 this.connect(v.getKey(),e.getDest(),e.getWeight());
+             }
+         }
 	}
+
+
 	/**
 	 * return the node_data by the node_id,
 	 * @param key - the node_id
@@ -71,6 +72,25 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		}
 		return null;
 	}	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + MC;
+		result = prime * result + edgeSize;
+		result = prime * result + ((edges_TheGragh_WD == null) ? 0 : edges_TheGragh_WD.hashCode());
+		result = prime * result + ((nodes_TheGragh_WD == null) ? 0 : nodes_TheGragh_WD.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this ==obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		directed_weighted_graph dwg = (directed_weighted_graph) obj;
+
+		return edgeSize == dwg.edgeSize();
+	}
 	/**
 	 * add a new node to the graph with the given node_data.
 	 * @param n

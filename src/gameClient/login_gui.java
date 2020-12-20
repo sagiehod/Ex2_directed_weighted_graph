@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class login_gui implements ActionListener {
+public class login_gui extends JFrame implements ActionListener {
 
 
 	private static JLabel idlabel;
@@ -15,13 +15,9 @@ public class login_gui implements ActionListener {
 	private static JLabel levelLabel;
 	private static JTextField levelText;
 	private static JButton button;
-///
 	public boolean flag=false;
 	public  int id=0;
 	public  int senrio=0;
-
-//	private music player = new music("Pokemon.mp3");
-//	private Thread playerThread = new Thread(player);
 
 	/**
 	 * build the menu
@@ -29,12 +25,12 @@ public class login_gui implements ActionListener {
 	 */
 	public void chose() {
 
-	JFrame frame= new JFrame();
-	JPanel panel= new JPanel();
-		frame.setSize(350,200);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(panel);
-		frame.setLocationRelativeTo(null); // make thr GUI shows in the middle
+
+		JPanel panel= new JPanel();
+		this.setSize(350,200);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.add(panel);
+		this.setLocationRelativeTo(null); // make thr GUI shows in the middle
 
 		panel.setLayout(null);
 		idlabel = new JLabel("Enter your id");
@@ -59,18 +55,18 @@ public class login_gui implements ActionListener {
 		panel.add(button);
 		button.addActionListener(this);  
 
-		frame.setVisible(true);
-		
+		this.setVisible(true);
+
 		//playerThread.start();
 
 	}
 	/**
 	 * Exit as soon as you stop using.
 	 */
-//	public void exit() {
-//		frame.setVisible(false); //you can't see me!
-//		frame.dispose(); //Destroy the JFrame object
-//	}
+	public void exit() {
+		this.setVisible(false); //you can't see me!
+		this.dispose(); //Destroy the JFrame object
+	}
 	/**
 	 * Exercise the action
 	 * param e 
@@ -78,26 +74,15 @@ public class login_gui implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(idText.getText().length()==9) {
+			id = Integer.parseInt(idText.getText());
+			senrio = Integer.parseInt(levelText.getText());
 
-		id = Integer.parseInt(idText.getText());
-        senrio = Integer.parseInt(levelText.getText());
-
-       	flag=true;
-		
-		
-//		int id = Integer.parseInt(idText.getText());
-//		int senrio = Integer.parseInt(levelText.getText());
-//		if(idText.getText().length()==9) {
-//			
-//			Ex2 start=new Ex2(id,senrio);
-//			
-//			Thread client = new Thread(start);
-//			
-//			client.start();
-//			playerThread.stop();
-//			exit();
+			flag=true;
 		}
-	
+
+	}
+
 
 
 }

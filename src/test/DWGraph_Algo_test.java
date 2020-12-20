@@ -16,18 +16,35 @@ class DWGraph_Algo_test {
 	dw_graph_algorithms ga= new DWGraph_Algo();
 
 
-	//		@Test
-	//		void test_copy() {
-	//		
-	//			directed_weighted_graph g_copy= ga.copy();
-	//			assertTrue(g.equals(g_copy));
-	//			assertEquals(true, g_copy.nodeSize()==ga.getGraph().nodeSize());
-	//			assertEquals(true, g_copy.edgeSize()==ga.getGraph().edgeSize());
-	//			g.removeNode(7);
-	//			assertNull(g.getNode(7));
-	//			assertNotEquals(true,g_copy.nodeSize()==ga.getGraph().nodeSize());
-	//			assertNotEquals(true, g_copy.getMC()==ga.getGraph().getMC());
-	//		}
+			
+			 @Test
+			    void copy() {
+				 directed_weighted_graph g = new DWGraph_DS();
+
+					g.addNode(new NodeData(0));
+					g.addNode(new NodeData(1));
+					g.addNode(new NodeData(2));
+					//the node that already exist
+					g.addNode(new NodeData(4));
+					g.addNode(new NodeData(5));
+					g.addNode(new NodeData(6));
+
+
+					g.connect(0,1,2);
+					g.connect(0,5,3);
+					g.connect(1,2,1);
+					g.connect(2,0,5);
+					g.connect(2,6,2);
+					g.connect(4,5,8);
+					g.connect(5,6,1);
+					g.connect(6,0,1);
+					g.connect(6,4,3);
+
+					ga.init(g);
+			      
+			        directed_weighted_graph copied = ga.copy();
+			        assertEquals(copied,g);
+			    }
 
 	@Test
 	void test_isconnected() {

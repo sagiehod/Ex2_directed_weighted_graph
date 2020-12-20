@@ -5,6 +5,46 @@ import gameClient.util.Point3D;
 		private int key;
 		private static int idCounter = 0;
 		private geo_location GLocation;	
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((GLocation == null) ? 0 : GLocation.hashCode());
+			result = prime * result + ((info == null) ? 0 : info.hashCode());
+			result = prime * result + key;
+			result = prime * result + tag;
+			long temp;
+			temp = Double.doubleToLongBits(weight);
+			result = prime * result + (int) (temp ^ (temp >>> 32));
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			NodeData other = (NodeData) obj;
+			if (GLocation == null) {
+				if (other.GLocation != null)
+					return false;
+			} else if (!GLocation.equals(other.GLocation))
+				return false;
+			if (info == null) {
+				if (other.info != null)
+					return false;
+			} else if (!info.equals(other.info))
+				return false;
+			if (key != other.key)
+				return false;
+			if (tag != other.tag)
+				return false;
+			if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+				return false;
+			return true;
+		}
 		private double weight;
 		private String info;
 		private int tag;	
