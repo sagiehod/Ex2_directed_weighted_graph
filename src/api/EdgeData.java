@@ -19,6 +19,7 @@ public class EdgeData implements edge_data {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
+	//equals function
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

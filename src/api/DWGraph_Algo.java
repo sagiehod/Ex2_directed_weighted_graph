@@ -86,11 +86,23 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	}
 
 	/**
-	 *Tarjan's strongly connected components algorithm is an algorithm in graph theory for finding the strongly connected components (SCCs) of a directed graph. 
-	 *It runs in linear time, matching the time bound for alternative methods including Kosaraju's algorithm and the path-based strong component algorithm.
-	 *The algorithm is named for its invento
-	 *Any vertex that is not on a directed cycle forms a strongly connected component all by itself
-	 * @param at from the node data
+	 * tarjan algorithm:
+ First depth search (DFS) starts from a node that receives from the isConnected function
+ (passes over nodedata) the nodes are located on a stack in the order of their visit.
+ When the first depth search recursively visits the at node and its descendants, 
+ those nodes do not necessarily suck out of the pile when this recursive call returns.
+  The essential unchanging characteristic is that a node remains in a stack after its visit if and only if there is a path
+   in the input graph from it to any node earlier in the stack.
+   In other words, in DFS a junction is removed from the stack only after crossing all of its connected paths.
+    When the DFS goes back it will remove the nodes in a single path and return to the root to start a new path.
+
+At the end of the conversation that criticizes at and his descendants, 
+we know if at itself has a path to each node earlier in the stack. 
+If so, the call repeats, leaving the at in the stack to keep the variable. If not, then at must be the root of its strongly connected component,
+ consisting of at along with later nodes in a stack of at (such nodes have paths back to at, but not to any previous node, 
+ because if they had paths to previous nodes So at will also have paths to previous nodes and that's a lie).
+  The connected component rooted in at node from the stack and is returned, retaining the variable again
+	 * @param at from the function isConnected -is a node from node data
 	 */
 	private void tarjan(node_data at) {
 
@@ -243,13 +255,11 @@ so if one of the neighbors is already updated with weight because we reached it 
 		Map<node_data, node_data> parentNodes = new HashMap<node_data, node_data>();
 
 		node_data start = this.WGraph.getNode(src);
-
 		queue.add(start); 
 		start.setWeight(0);
 
 		while((!queue.isEmpty())){
 			node_data u=queue.poll();
-
 			for (edge_data e :  WGraph.getE(u.getKey())){
 				node_data v= this.WGraph.getNode(e.getDest());
 				double dist = u.getWeight()+e.getWeight();

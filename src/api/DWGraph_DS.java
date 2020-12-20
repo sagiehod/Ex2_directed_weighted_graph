@@ -86,6 +86,7 @@ public class DWGraph_DS  implements directed_weighted_graph {
 		result = prime * result + ((nodes_TheGragh_WD == null) ? 0 : nodes_TheGragh_WD.hashCode());
 		return result;
 	}
+	//equals function
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

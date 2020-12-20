@@ -25,8 +25,6 @@ public class Game_Panel extends JPanel {
 	private Image backgraound;
 	private Image charmeleon;
 	private Image charizard;
-	private Image Misty;
-	private Image Brock;
 
 	public static int scenario_num;
 	public static Arena arena= new Arena();
@@ -46,14 +44,12 @@ public class Game_Panel extends JPanel {
 	    this.setBackground(Color.white);
 	
 
-
 	}
 
 	   /**
   *  constructor of Game_Panel
   * param a (string)
   */	Game_Panel(String a) {
-		//	super(a);
 		this.addComponentListener((ComponentListener) new ComponentAdapter() {
 			@Override
 			/**

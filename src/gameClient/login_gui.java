@@ -7,8 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class login_gui extends JFrame implements ActionListener {
+//In this class we created the user login by id and select the game stage
 
+public class login_gui extends JFrame implements ActionListener {
 
 	private static JLabel idlabel;
 	private static JTextField idText;

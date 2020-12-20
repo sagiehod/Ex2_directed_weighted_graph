@@ -45,29 +45,32 @@ public class Ex2 implements Runnable{
 
 	public static void main(String[] a) {
 		if(a.length==0) {
-		login_gui  l = new login_gui();
-		l.chose();
-		music player = new music("./data/Pokemon.mp3");
-		Thread playerThread = new Thread(player);
-		playerThread.start();
-		while(l.flag != true) {
-			System.out.println("");
-		}
-		l.exit();
-		playerThread.stop();
-		Ex2 start=new Ex2(l.id,l.senrio);
-		Thread client = new Thread(start);
-		client.start();
+			login_gui  l = new login_gui();
+			l.chose();
+			music player = new music("./data/Pokemon.mp3");
+			Thread playerThread = new Thread(player);
+			playerThread.start();
+			while(l.flag != true) {
+				System.out.println("");
+			}
+			l.exit();
+			playerThread.stop();
+			Ex2 start=new Ex2(l.id,l.senrio);
+			Thread client = new Thread(start);
+			client.start();
 		}else if(a.length==2) {
 			Ex2 start=new Ex2(Integer.parseInt(a[0]),Integer.parseInt(a[1]));
 			Thread client = new Thread(start);
 			client.start();	
 		}
 	}
-		
+
 
 	/**
 	 * run the game
+	 * in which we called all the functions that create the course of the game:
+      load the graph, place the Pokemon, the agents, move the agents and allow them to run on the graph and catch Pokemon,
+      the music working in parallel by thread.
 	 * init the game(graph)
 	 * get the frame(gui)  and all the data
 	 * 
@@ -105,16 +108,7 @@ public class Ex2 implements Runnable{
 			}
 		}
 
-//	      JButton button = new JButton("Click to Close!");
-//	      _win.setDefaultCloseOperation(_win.EXIT_ON_CLOSE);
-//	      _win.setContentPane(button);
-//	      button.addActionListener(e -> {
-//	    	  game.stopGame();
-//	    	  _win.dispose();
-//	      });
 
-		
-		
 		System.out.println(game.toString());
 		System.exit(0);
 	}
@@ -145,7 +139,7 @@ public class Ex2 implements Runnable{
 				if(p.get_edge() == e) onEdge.add(p);
 			}
 			if(onEdge.isEmpty()) {
-			
+
 				long t = (long) (200000*gg.getNode(a.getNextNode()).getLocation().distance(pos)/(speed/2));
 				if(t < time) time = t;
 				if(t > maxTime) maxTime = t;
@@ -153,21 +147,25 @@ public class Ex2 implements Runnable{
 			else {
 				for(CL_Pokemon p : onEdge) {
 					noPokemon = false;
-				
+
 					long t = (long) (100000*p.getLocation().distance(pos)/speed);
 					if(t < time) time = maxTime = t;
 				}
 			}
 		}
-		
+
 		if(noPokemon) return 220;
 		return time+20;
 	}
 	/** 
-	 * Moves each of the agents along the edge,by some Conditions.
-	 * in case the agent is on a node the next destination (next edge) is chosen (randomly)
-	 *  and Sending the agent each time to his next rib as part of the path to the rib that the Pokemon is on,
-	 *  she calculates for each agent the vertex he needs to reach..
+	 *  move the agents in the graph from point to point by the moveAgent function
+	 *  in such a way that they reach each Pokemon that is on the graph with as few moves as possible,
+	 *  but in an efficient way that each agent catches as many Pokemon as possible and its value increases.
+	 *   In the above function we used the CL_Agentn class through which we get the type of agents.
+	 *    And also the CL_Pokemon class, through which we got details about the Pokemon: 
+	 *    type, position in the graph, value and more.
+	 *     And we had to find the best and fastest way for them to get to Pokemon with the lowest distance.
+	 * 
 	 * @param game
 	 * @param gg
 	 * @param
@@ -231,9 +229,9 @@ public class Ex2 implements Runnable{
 	 *  where we used the Dijkstra algorithm to find the shortestpathDist which checks the shortest path and returns the weight of the edge (dest) and finds the shortest path for each agent. 
 	 * Which is closest to it. And there it is sent. The location is defined by its side has src, dest))
 	 *  and dest is the vertex to which it should reach.
-     *  Next, we used the init function which loads the graph, gets the list of agents and by the function we created places them, 
-     *    and the Pokemon positions by the Arena class and places them in the graph.
-     *   Then we used the shortestpath function (which is based on the Dijkstra's algorithm) to save the shortest route
+	 *  Next, we used the init function which loads the graph, gets the list of agents and by the function we created places them, 
+	 *    and the Pokemon positions by the Arena class and places them in the graph.
+	 *   Then we used the shortestpath function (which is based on the Dijkstra's algorithm) to save the shortest route
 	 * @param src
 	 * @param log
 	 * @return ans -pokemon
@@ -245,16 +243,16 @@ public class Ex2 implements Runnable{
 		CL_Pokemon ans = null;
 		CL_Pokemon ans1 = null;
 		if(!Ex2.ffs.isEmpty()) {
-		 ans = Ex2.ffs.get(0);
-		 ans1 =  Ex2.ffs.get(0);
+			ans = Ex2.ffs.get(0);
+			ans1 =  Ex2.ffs.get(0);
 		}
 		double path_min= Double.POSITIVE_INFINITY;
 		double path_min2= Double.POSITIVE_INFINITY;
 		double dest=-1;
 
-		
 
-	
+
+
 		// for to pokemon and check min path 
 		for(CL_Pokemon pokemon: Ex2.ffs) {
 			boolean chased = false;
@@ -265,7 +263,7 @@ public class Ex2 implements Runnable{
 				edge_data edge = graph.getEdge(pokemon.get_edge().getSrc(),pokemon.get_edge().getDest()); 
 
 				dest= algo.shortestPathDist(src,pokemon.get_edge().getSrc());
-				
+
 				if(dest<path_min )	{ 
 					path_min2 = path_min;
 					path_min=dest;	
@@ -277,7 +275,7 @@ public class Ex2 implements Runnable{
 				}
 			}
 		}
-		
+
 		if (ans.getValue() < ans1.getValue() && path_min-path_min2==3) return ans1;
 		return ans;
 	}
@@ -319,8 +317,8 @@ public class Ex2 implements Runnable{
 		catch (JSONException e) {e.printStackTrace();}
 	}
 	/**
-	 * Positions the agent in a strategic place in the start
-	 *param numberOfAgents
+	 * We created an agent placement function the first time it calculates all the possible options that agents have and their score from each choice of place,
+	 *  and it implements the getVchooseK function
 	 * @param  pokemons
 	 */
 	public static void agentsFirstPlaceByValue(ArrayList<CL_Pokemon> pokemons, int numberOfAgents, 

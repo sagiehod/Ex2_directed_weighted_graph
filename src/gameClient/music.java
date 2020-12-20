@@ -3,6 +3,9 @@ package gameClient;
 import javazoom.jl.player.*;
 import java.io.FileInputStream;
 
+//In this class we created background music at the entrance to the game 
+//and then the music changes during the game.
+
 public class music implements Runnable {
 
 	private String path;
