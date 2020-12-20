@@ -6,11 +6,13 @@
 
 In this project, we have developed a system that enables the collection of geographical information and the presentation of information in graphical tools.
 
-We built a Pokemon game that works on the graph.
+- We built a Pokemon game that works on the graph.
 We have developed a game logic in which a group of agents has to perform tasks (capturing Pokemon) by moving along the graph for the purpose towards the side.
 The object of the game is to catch all the Pokemon in the shortest time possible.
-At each stage the Pokemon are placed at random, for each content we plan movement and placement so that in the allotted time he can eat as many Pokemon as possible.
-After the explanation it is divided into types of Pokemon, by is their value from the lowest to the highest which is the rare Pokemon. This is basically the points of each agent.
+At each stage the Pokemon are placed at random,
+for each content we plan movement and placement so that in the allotted time he can eat as many Pokemon as possible.
+After the explanation it is divided into types of Pokemon, by is their value from the lowest to the highest which is the rare Pokemon.
+This is basically the points of each agent.
 Pokemon are represented by images of Pokemon.
 Agents are represented by images of Pokemon Fire.
 There are 0-23 stages, each with a different amount of Pokemon and agents,
