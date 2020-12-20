@@ -61,16 +61,12 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	Stack<node_data> stack=new Stack<node_data>();
 	int sccCount=0;
 	int id=0;
-/**
- * Nodes are placed on a pile in the order of their visit. 
- * When the first depth search recursively visits the v node and its descendants,
- *  not all of these nodes are necessarily sucked out of the pile when this recursive call returns. 
- *  The essential unchanging characteristic is that a node remains in a stack after its visit 
- *  if and only if there is a path in the input graph from it to some node earlier in the stack.
- *   In other words, it means that in DFS a node is only removed from the stack after all its connected paths have been crossed. 
- *   When the DFS goes back it will remove the nodes in a single path and return to the root to start a new path.
- */
 
+	/**
+	 * This function checks if there is a valid path from EVREY node to each other node 
+	 * ( Checks if the graph is connected)
+	 * @return false if there more than one SccCount=Binding components.
+	 */
 	@Override
 	public boolean isConnected() {
 		if( WGraph==null||WGraph.nodeSize()==0||WGraph.nodeSize()==1) {
@@ -82,7 +78,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		id=0;
 		for(node_data i: this.WGraph.getV()) {
 			if(i.getTag()==0) {
-				dfs(i);
+				tarjan(i);
 			}
 		}
 		System.out.println(sccCount);
@@ -90,7 +86,14 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		return false;
 	}
 
-	private void dfs(node_data at) {
+	/**
+	 * The tarjan algorithm takes a directed graph as input,
+	 *  and produces a partition of the graph's vertices into the graph's strongly connected components.
+	 *  Each vertex of the graph appears in exactly one of the strongly connected components.
+	
+	Any vertex that is not on a directed cycle forms a strongly connected component all by itself
+	 */
+	private void tarjan(node_data at) {
 
 		//ids - > tag 
 		//low -> weight 
@@ -104,7 +107,7 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 		if(this.getGraph().getE(at.getKey())!=null) {
 			for(edge_data edge:this.getGraph().getE(at.getKey())) {
 				node_data to =this.getGraph().getNode(edge.getDest());
-				if(to.getTag()==0) dfs(to);
+				if(to.getTag()==0) tarjan(to);
 				if(to.getInfo().equals("true")) at.setWeight(Math.min(at.getWeight(), to.getWeight()));
 			}
 		}
@@ -129,7 +132,6 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	 * and the function returns the weight of the dest which should be the lowest weight
 	 *@return the length of the shortest path between src to dest
 	 */
-
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
@@ -173,10 +175,8 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 			ans.add(WGraph.getNode(src));
 			return ans;
 		}
-
+// a container for the nodes that in the shortest path
 		Map<node_data,node_data> parentNodes = this.dijkstra(src, dest);
-
-
 		node_data node = this.WGraph.getNode(dest);
 
 		while(node != null) {
@@ -210,11 +210,11 @@ public class DWGraph_Algo implements dw_graph_algorithms{
 	 * 
 	 * Dijkstra's algorithm: An algorithm for finding the shortest paths between nodes in a graph
 he gets 2 nodes- src and -dest should get from the src node to the dest node and go through the nodes with the lowest weight.
- The algorithm works as follows:
 We will first initialize all the weights of the nodes to infinity so that we know which node we have not yet updated,
  and then we set a priority queue that will contain the nodes we will visit and update their weights.
 In addition, we set the Hashmap to initialize all nodes in false.
-Each node he visited will be marked as a visit (correct), and that way we will know if we visited this node or not, 
+Each node he visited will be marked as a visit (correct), 
+and that way we will know if we visited this node or not, 
 and finally, if there is such a node, then he is not connected to the other node and he will remain marked as false.
 .
 In the priority queue, we enter the first node and initialize its weight to 0,
@@ -222,7 +222,9 @@ In the priority queue, we enter the first node and initialize its weight to 0,
  For the current junction,we will include all its neighbors and update their temporary weights.
 The weight of each node is updated according to the parent weight of that node plus the temporary distance between them which is the weight on the edge.
 Then the same node we started with becomes the father of this node and leaves the queue, 
-it is marked as one we have already visited and we will not return to it again. Each of the introduced neighbors treats him the same way: putting his neighbors in line and updating their weights.
+it is marked as one we have already visited and we will not return to it again. 
+Each of the introduced neighbors treats him the same way:
+ putting his neighbors in line and updating their weights.
 so if one of the neighbors is already updated with weight because we reached it through another father-node, then we will check through which neighbor that node will have the lowest weight, then we will keep the lower weight. We will take the node out of the queue and return it with the updated weight. To the same junction is also updated the new father through which we reached a junction with a lower weight.
   And so for each node up to the node, we set to reach in the graph.
 	 * @param src
@@ -252,7 +254,6 @@ so if one of the neighbors is already updated with weight because we reached it 
 
 			for (edge_data e :  WGraph.getE(u.getKey())){
 				node_data v= this.WGraph.getNode(e.getDest());
-				//if( v.getTag()==0) {
 				double dist = u.getWeight()+e.getWeight();
 				if (dist < v.getWeight()) {       
 					v.setWeight(dist);
@@ -261,8 +262,6 @@ so if one of the neighbors is already updated with weight because we reached it 
 					queue.add(v);
 				}
 			}
-			//}
-			//u.setTag(1);
 		}
 		return parentNodes;
 	}
@@ -346,66 +345,10 @@ so if one of the neighbors is already updated with weight because we reached it 
 			}
 			init(_g);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
 
-
-
-	public static void main(String[] args) {
-		directed_weighted_graph g = new DWGraph_DS();
-
-		g.addNode(new NodeData(0));
-		g.addNode(new NodeData(1));
-		g.addNode(new NodeData(2));
-		//the node that already exist
-		g.addNode(new NodeData(4));
-		g.addNode(new NodeData(5));
-		g.addNode(new NodeData(6));
-		g.addNode(new NodeData(3));
-		g.addNode(new NodeData(7));
-
-		g.connect(6,0,5);
-		g.connect(5,0,4);
-		g.connect(2,0,9);
-		g.connect(0,1,3);
-		g.connect(1,2,5);
-		g.connect(6,2,3);
-		g.connect(6,4,3);
-		g.connect(5,6,7);
-		g.connect(4,5,3);
-		g.connect(3,4,7);
-		g.connect(3,7,3);
-		g.connect(7,3,7);
-		g.connect(7,5,3);
-
-		//		
-		//		g.addNode(new NodeData(0));
-		//		g.addNode(new NodeData(1));
-		//		
-		//		g.connect(0,1,3);
-		//
-		//		g.connect(1,0,3);
-
-
-		dw_graph_algorithms algo=new DWGraph_Algo();
-		algo.init(g);
-		algo.isConnected();
-		List<node_data> a=algo.shortestPath(0, 2);
-		for(node_data i:a) {
-			System.out.print(i.getKey()+" ");
-		}
-
-		//
-		//	algo.save("test1");
-		//		algo.load("test1");
-		//		directed_weighted_graph g1=algo.getGraph();
-		//		
-		//		System.out.println(g1.nodeSize());
-		//		System.out.println(g1.edgeSize());
-
-	}
 }
