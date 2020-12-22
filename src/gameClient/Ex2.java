@@ -6,6 +6,8 @@ import api.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,10 +79,12 @@ public class Ex2 implements Runnable{
 	 */
 	@Override
 	public void run() {
+
 		game_service game = Game_Server_Ex2.getServer(senrio); // you have [0,23] games
 
-		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
+		graph =reade_Graph(game.getGraph(),"graph");
 		init(game);
+		game.login(id);
 		game.startGame();
 		_win.setTitle("Ex2 - OOP: (NONE trivial Solution) "+game.toString());
 		//int ind=(int) (game.timeToEnd()/100);
@@ -93,8 +97,8 @@ public class Ex2 implements Runnable{
 
 		while(game.isRunning()) {
 			move ++;
-			String lg = moveAgants(game, gg);
-			dt = calcTimeToNextEvent(game, gg, lg);
+			String lg = moveAgants(game, graph);
+			dt = calcTimeToNextEvent(game, graph, lg);
 			_win.repaint();
 			long seconds = TimeUnit.MILLISECONDS.toSeconds(game.timeToEnd());
 			_win.print_time(seconds,senrio);
@@ -107,11 +111,35 @@ public class Ex2 implements Runnable{
 				e.printStackTrace();
 			}
 		}
-
-
 		System.out.println(game.toString());
 		System.exit(0);
 	}
+
+	/**
+	 *This function allows us to write a Json file indicating the graph of the given game
+	 * @param JsonGraph
+	 * @param fileName
+	 */
+
+	public directed_weighted_graph reade_Graph(String JsonGraph,String fileName) {
+		dw_graph_algorithms algo= new DWGraph_Algo();
+		
+		try {
+			FileWriter graph_game = new FileWriter(fileName);
+
+			graph_game.write(JsonGraph);
+			graph_game.flush();
+			graph_game.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		algo.load(fileName);
+		return algo.getGraph();
+	}
+
+
 	/**
 	 * Calculate the transition time to the second transition
 	 * Thinks how long each agent has until the next event, 
@@ -251,8 +279,6 @@ public class Ex2 implements Runnable{
 		double dest=-1;
 
 
-
-
 		// for to pokemon and check min path 
 		for(CL_Pokemon pokemon: Ex2.ffs) {
 			boolean chased = false;
@@ -291,9 +317,9 @@ public class Ex2 implements Runnable{
 
 		String g = game.getGraph();
 		String fs = game.getPokemons();
-		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
+		graph = game.getJava_Graph_Not_to_be_used();
 		_ar = new Arena();
-		_ar.setGraph(gg);
+		_ar.setGraph(graph);
 		_ar.setPokemons(Arena.json2Pokemons(fs));
 		_win = new Game_Frame("test Ex2");
 		_win.setSize(1000, 700);
@@ -308,10 +334,10 @@ public class Ex2 implements Runnable{
 			int rs = ttt.getInt("agents");
 
 			ArrayList<CL_Pokemon> cl_fs = Arena.json2Pokemons(game.getPokemons());
-			for(int a = 0;a<cl_fs.size();a++) { Arena.updateEdge(cl_fs.get(a),gg);}
+			for(int a = 0;a<cl_fs.size();a++) { Arena.updateEdge(cl_fs.get(a),graph);}
 
 			dw_graph_algorithms algo =new DWGraph_Algo();
-			algo.init(gg);
+			algo.init(graph);
 			agentsFirstPlaceByValue(cl_fs,rs,algo,game);
 		}
 		catch (JSONException e) {e.printStackTrace();}
@@ -334,6 +360,7 @@ public class Ex2 implements Runnable{
 			game.addAgent(pokemons.get(i).get_edge().getSrc());
 		}
 	}
+
 }
 
 
